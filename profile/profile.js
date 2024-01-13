@@ -1,0 +1,7 @@
+function immagineProfilo() {
+
+}
+
+function nomeUtente() {
+    
+}

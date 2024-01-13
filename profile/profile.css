@@ -1,0 +1,44 @@
+.row {
+    width: 100%;
+    border: 2px outset lightblue;
+}
+
+.profile-img {
+    margin: 1%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.scrollable-field {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.post {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.post-img {
+    width: 70%;
+    height: auto;
+}
+
+.fixed-bottom {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-bottom button {
+    font-size: 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+

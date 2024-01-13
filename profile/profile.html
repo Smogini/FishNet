@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12 mb-3 d-flex align-items-center">
+            <img src="immagineProfilo()" alt="Profilo" class="profile-img square mr-3">
+            <div>
+                <h2>"nomeUtente()"</h2>
+                <p>Member since: "dataCreazione()"</p>
+            </div>
+            <button class="btn btn-primary ml-auto">Edit</button>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="scrollable-field">
+                <div class="post">
+                    <div class="d-flex align-items-center">
+                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
+                        <div>
+                            <p>Descrizione del post con testo e dettagli...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="d-flex align-items-center">
+                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
+                        <div>
+                            <p>Descrizione del post con testo e dettagli...</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="row fixed-bottom text-center">
+        <div class="col-12">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary"><i class="fas fa-home"></i> Home</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-search"></i> Search</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-pencil-alt"></i> Post</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-users"></i> Follower</button>
+                <button type="button" class="btn btn-secondary"><i class="fas fa-user-friends"></i> Following</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="profile.js"></script>
+</body>
+</html>

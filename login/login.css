@@ -1,0 +1,11 @@
+/*Forgot Password*/
+.forgot-password {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.forgot-password:hover {
+    color: red;
+}
