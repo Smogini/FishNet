@@ -1,16 +1,22 @@
 .row {
     margin: 0.5%;
+    padding: 1%;
     border: 2px outset lightblue;
+}
+
+.square {
+    width: 10%;
+    height: 10%;
 }
 
 .profile-img {
     margin: 1%;
-    width: 7%;
+    width: 5%;
     object-fit: cover;
 }
 
 .scrollable-field {
-    max-height: 75vh;
+    max-height: 73vh;
     overflow-y: auto;
 }
 

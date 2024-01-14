@@ -4,28 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FishNet Home</title>
-     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-     <!-- CSS -->
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 d-flex align-items-center">
-            <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3">
-            <div>
-                <h2 id="nomeUtente"></h2>
-                <p id="dataCreazione"></p>
+        <div class="col-12 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img id="logoSocial" alt="Logo Social" class="square mr-3" src="../img/logo.png">
+                <div>
+                    <h2 id="nomeSocial">FishNet</h2>
+                </div>
             </div>
-            <a href="../profile/profile.html" class="btn btn-primary ml-auto">Visit<i class="bi bi-arrow-right ml-2"></i>
-            </a>
+            <div class="d-flex align-items-center">
+                <i class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></i>
+            </div>
         </div>
     </div>
-
+    
+    
     <div class="row">
         <div class="col-12">
             <div class="scrollable-field">
