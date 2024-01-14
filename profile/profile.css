@@ -1,17 +1,16 @@
 .row {
-    width: 100%;
+    margin: 0.5%;
     border: 2px outset lightblue;
 }
 
 .profile-img {
     margin: 1%;
-    width: 100px;
-    height: 100px;
+    width: 7%;
     object-fit: cover;
 }
 
 .scrollable-field {
-    max-height: 65vh;
+    max-height: 75vh;
     overflow-y: auto;
 }
 
@@ -23,22 +22,18 @@
 }
 
 .post-img {
-    width: 70%;
-    height: auto;
+    width: 65%;
 }
 
 .fixed-bottom {
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
     background-color: #f8f9fa;
     padding: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px lightblue;
 }
 
 .fixed-bottom button {
+    color: white;
     font-size: 16px;
     margin-left: 5%;
     margin-right: 5%;
 }
-
