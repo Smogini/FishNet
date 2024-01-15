@@ -4,9 +4,9 @@
     border: 2px outset lightblue;
 }
 
-.square {
-    width: 9%;
-    height: 9%;
+.square-container {
+    position: relative;
+    width: 10%;
 }
 
 .scrollable-field {

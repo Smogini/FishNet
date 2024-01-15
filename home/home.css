@@ -4,6 +4,12 @@
     border: 2px outset lightblue;
 }
 
+.custom-container {
+    background-image: url("../img/cool-background.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .square {
     width: 10%;
     height: 10%;
@@ -21,9 +27,6 @@
 }
 
 .post {
-    border: 1px solid lightblue;
-    border-radius: 8px;
-
     margin-top: 2%;
     margin-bottom: 2%;
     margin-left: 1%;
