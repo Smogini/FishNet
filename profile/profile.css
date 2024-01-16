@@ -4,9 +4,15 @@
     border: 2px outset lightblue;
 }
 
-.square-container {
-    position: relative;
+.custom-container {
+    background-image: url("../img/cool-background.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.img-fluid {
     width: 10%;
+    height: auto;
 }
 
 .scrollable-field {
