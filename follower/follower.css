@@ -20,19 +20,20 @@
     overflow-y: auto;
 }
 
-.post {
+.follower {
     border: 1px solid lightblue;
     border-radius: 8px;
 
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
 }
 
-.post-img {
+.profile-img {
     margin: 1%;
-    width: 65%;
+    width: 5%;
+    object-fit: cover;
 }
 
 .fixed-bottom {
