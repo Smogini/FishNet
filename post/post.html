@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishNet Post</title>
+    <link rel="stylesheet" href="post.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
+                <div>
+                    <h2 id="nomeSocial">FishNet</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form">
+        <form action="post.php" method="post" enctype="multipart/form-data">
+            <label for="fishImage">Foto del Pesce:</label>
+            <input type="file" name="fishImage" id="fishImage" accept="image/*" required>
+            
+            <label for="description">Descrizione:</label>
+            <textarea name="description" id="description" rows="4" required></textarea>
+    
+            <label for="location">Luogo sulla mappa:</label>
+            <input type="text" name="location" id="location" required readonly>
+            <div id="map"></div>
+    
+            <button type="submit" onclick="post()">Pubblica</button>
+        </form>
+    </div>
+</div>
+
+<script src="post.js"></script>
+</body>
+</html>
