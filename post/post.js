@@ -17,6 +17,19 @@ document.addEventListener('DOMContentLoaded', function () {
     initMap();
 });
 
+
+function confermaReset() {
+    if (confirm("Are you sure?")) {
+        history.back();
+    } else {
+    }
+}
+
+function apriPopupNotifiche() {
+    alert('Funzione non implementata');
+
+}
+
 function post() {
-    /*TODO*/
+    alert("Funzione non implementata");
 }
