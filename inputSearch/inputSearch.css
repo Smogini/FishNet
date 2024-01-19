@@ -1,0 +1,53 @@
+.custom-container {
+    background-image: url("../img/cool-background.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.row {
+    margin: 0.5%;
+    padding: 1%;
+    border: 2px outset lightblue;
+}
+
+.img-fluid {
+    width: 10%;
+    height: auto;
+}
+
+.form {
+    height: 73vh;
+    overflow-y: auto;
+}
+
+.input {
+    margin: 0.5%;
+    align-items: center;
+}
+
+.searchButton {
+    max-width: 100%;
+}
+
+.radio {
+    margin: 0.5%;
+    padding: 1%;
+    border: 2px outset lightblue;
+
+
+    color: antiquewhite;
+    float: right;
+}
+
+.fixed-bottom {
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0px 0px 10px lightblue;
+}
+
+.fixed-bottom button {
+    color: white;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
