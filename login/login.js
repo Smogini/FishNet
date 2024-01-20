@@ -1,13 +1,23 @@
 function login() {
-    /*TODO*/
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
 
-    if (username === "utente" && password === "password") {
-        alert("Login riuscito!");
-    } else {
-        alert("Credenziali non valide. Riprova.");
-    }
+    $.ajax({
+        type: "POST",
+        url: "process_login.php",
+        data: {
+            action: "login",
+            username: user,
+            password: pass
+        },
+        success: function() {
+            // window.location.href = "process_login.php";
+            console.log(user + " " + pass);
+        },
+        error: function() {
+            alert("Login sbagliato");
+        }
+    });
 }
 
 function forgotPassword() {

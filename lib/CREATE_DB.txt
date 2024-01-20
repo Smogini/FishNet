@@ -1,0 +1,17 @@
+CREATE DATABASE fishnetdb;
+
+CREATE TABLE `fishnetdb`.`users` (
+    `first` VARCHAR(16) NOT NULL ,
+    `last` VARCHAR(16) NOT NULL ,
+    `username` VARCHAR(15) PRIMARY, 
+    `password` VARCHAR(16) NOT NULL,
+    `salt` VARCHAR(16) NOT NULL, 
+    `address` VARCHAR(50) NOT NULL, 
+    `dob` DATE NOT NULL
+);
+
+CREATE TABLE `fishnetdb`.`login_attempts` (
+    `username` VARCHAR(15) NOT NULL , 
+    `time` TIMESTAMP NOT NULL , 
+    PRIMARY KEY (`username`)
+);
