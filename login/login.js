@@ -10,14 +10,20 @@ function login() {
             username: user,
             password: pass
         },
-        success: function() {
-            // window.location.href = "process_login.php";
-            console.log(user + " " + pass);
+        success: function(response) {
+            if (response === "login_success") {
+                window.location.href = "../home/home.html";
+            } else if (response === "missing_data") {
+                alert("Missing username or password");
+            } else {
+                alert("Incorrect username or password");
+            }
         },
         error: function() {
-            alert("Login sbagliato");
+            
         }
     });
+
 }
 
 function forgotPassword() {

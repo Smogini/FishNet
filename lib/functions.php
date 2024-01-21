@@ -7,39 +7,36 @@ function login($username, $password, $dbh) {
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($username, $db_password, $salt);
+        $stmt->bind_result($user, $db_password, $salt);
         $stmt->fetch();
-        $password = hash('sha512', $password);
+        $password = hash('sha512', $password.$salt);
         if($stmt->num_rows == 1) {
-            if(checkbrute($username, $dbh)) {
+            if(checkbrute($user, $dbh)) {
                 // Account disabilitato a causa dei troppi tentativi d'accesso
                 error_log("Account disabilitato");
                 return false;
             } else {
-                error_log("DB: " . $db_password . " Pass: " . $password);
                 if($db_password == $password) {
                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
   
-                    $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // ci proteggiamo da un attacco XSS
-                    $_SESSION['username'] = $username;
+                    $user = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $user); // ci proteggiamo da un attacco XSS
+                    $_SESSION['username'] = $user;
                     $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
                     $stmt->close();
                     // Login eseguito con successo.
-                    error_log("Login con successo");
-                    return true;    
+                    return true;
                 } else {
                     // Password incorretta, registra il tentativo fallito nel DB
                     $now = time();
                     error_log("Password incorretta -> " . $now);
                     $stmt = $dbh->prepareQuery("INSERT INTO login_attempts (username, time) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $username, $now);
+                    $stmt->bind_param("ss", $user, $now);
                     $stmt->execute();
                     $stmt->close();
                     return false;
                 }
             }
         } else {
-            error_log("L'utente non esiste");
             // L'utente inserito non esiste.
             return false;
         }

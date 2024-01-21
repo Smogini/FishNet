@@ -15,6 +15,7 @@ class DatabaseHelper {
     public function insertUser($first, $last, $username, $pass, $addr, $dob) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         $pass = hash('sha512', $pass.$random_salt);
+        error_log("Random salt: " . $random_salt);
         $query = "INSERT INTO users(first, last, username, password, salt, address, dob) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("sssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob);

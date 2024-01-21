@@ -9,20 +9,14 @@ if (isset($_POST['action'])) {
     
     switch($_POST['action']) {
         case 'login':
-            if(isset($_POST['username'], $_POST['password'])) { 
+            if(isset($_POST['username'], $_POST['password']) && ($_POST['username'] !== "" && $_POST['password'] !== "")) {
                 $username = $_POST['username'];
                 $password = $_POST['password']; // Recupero la password criptata.
-                error_log("Prima di controllare il login: " . $username . " " . $password);
                 if(login($username, $password, $dbh)) {
-                    error_log('Success: You have been logged in!');
-                } else {
-                    error_log("Credenziali non corrette");
-                    header('Location: ./login.php?error=1');
+                    echo "login_success";
                 }
-            } else { 
-                // Le variabili corrette non sono state inviate a questa pagina dal metodo POST.
-                error_log("Username e password non sono impostati");
-                echo 'Invalid Request';
+            } else {
+                echo "missing_data";
             }
             break;
         
@@ -32,8 +26,6 @@ if (isset($_POST['action'])) {
     }
     $dbh->closeConnection();
 
-} else {
-    error_log("Errore");
 }
 
 ?>

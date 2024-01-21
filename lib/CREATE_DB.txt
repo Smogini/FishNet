@@ -13,5 +13,5 @@ CREATE TABLE `fishnetdb`.`users` (
 CREATE TABLE `fishnetdb`.`login_attempts` (
     `username` VARCHAR(15) NOT NULL , 
     `time` TIMESTAMP NOT NULL , 
-    PRIMARY KEY (`username`)
+    PRIMARY KEY (`time`)
 );
