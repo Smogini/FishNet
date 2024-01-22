@@ -13,7 +13,6 @@ function login($username, $password, $dbh) {
         if($stmt->num_rows == 1) {
             if(checkbrute($user, $dbh)) {
                 // Account disabilitato a causa dei troppi tentativi d'accesso
-                error_log("Account disabilitato");
                 return false;
             } else {
                 if($db_password == $password) {
@@ -28,9 +27,9 @@ function login($username, $password, $dbh) {
                 } else {
                     // Password incorretta, registra il tentativo fallito nel DB
                     $now = time();
-                    error_log("Password incorretta -> " . $now);
-                    $stmt = $dbh->prepareQuery("INSERT INTO login_attempts (username, time) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $user, $now);
+                    $id = getLastID($dbh) + 1;
+                    $stmt = $dbh->prepareQuery("INSERT INTO login_attempts (id, username, time) VALUES (?, ?, ?)");
+                    $stmt->bind_param("iss", $id, $user, $now);
                     $stmt->execute();
                     $stmt->close();
                     return false;
@@ -41,6 +40,19 @@ function login($username, $password, $dbh) {
             return false;
         }
     }
+}
+
+function getLastID($dbh) {
+    $query = "SELECT MAX(id) FROM login_attempts";
+    $stmt = $dbh->prepareQuery($query);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($id);
+    $stmt->fetch();
+    if ($id === null) {
+        $id = 0;
+    }
+    return $id;
 }
 
 function checkbrute($username, $dbh) {
@@ -66,7 +78,8 @@ function login_check($dbh) {
       $username = $_SESSION['username'];
       $login_string = $_SESSION['login_string'];  
       $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
-      if ($stmt = $dbh->prepare("SELECT password FROM users WHERE username = ? LIMIT 1")) { 
+      $stmt = $dbh->prepareQuery("SELECT password FROM users WHERE username = ? LIMIT 1");
+      if ($stmt) { 
          $stmt->bind_param('s', $username); // esegue il bind del parametro '$user_id'.
          $stmt->execute(); // Esegue la query creata.
          $stmt->store_result();
@@ -94,6 +107,18 @@ function login_check($dbh) {
       // Login non eseguito
       return false;
     }
-}  
+}
+
+function sec_session_start() {
+    $session_name = 'fishnet_session'; // Imposta un nome di sessione
+    $secure = false; // Imposta il parametro a true se vuoi usare il protocollo 'https'.
+    $httponly = true; // Questo impedirà ad un javascript di essere in grado di accedere all'id di sessione.
+    ini_set('session.use_only_cookies', 1); // Forza la sessione ad utilizzare solo i cookie.
+    $cookieParams = session_get_cookie_params(); // Legge i parametri correnti relativi ai cookie.
+    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly); 
+    session_name($session_name); // Imposta il nome di sessione con quello prescelto all'inizio della funzione.
+    session_start(); // Avvia la sessione php.
+    session_regenerate_id(); // Rigenera la sessione e cancella quella creata in precedenza.
+}
 
 ?>

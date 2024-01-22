@@ -3,15 +3,18 @@ CREATE DATABASE fishnetdb;
 CREATE TABLE `fishnetdb`.`users` (
     `first` VARCHAR(16) NOT NULL ,
     `last` VARCHAR(16) NOT NULL ,
-    `username` VARCHAR(15) PRIMARY, 
-    `password` VARCHAR(16) NOT NULL,
-    `salt` VARCHAR(16) NOT NULL, 
+    `username` VARCHAR(15) PRIMARY KEY, 
+    `password` VARCHAR(128) NOT NULL,
+    `salt` VARCHAR(128) NOT NULL, 
     `address` VARCHAR(50) NOT NULL, 
-    `dob` DATE NOT NULL
+    `dob` DATE NOT NULL,
+    `profile_image` BLOB NOT NULL
 );
 
 CREATE TABLE `fishnetdb`.`login_attempts` (
+    `id`INT NOT NULL,
     `username` VARCHAR(15) NOT NULL , 
-    `time` TIMESTAMP NOT NULL , 
-    PRIMARY KEY (`time`)
+    `time` VARCHAR(10) NOT NULL , 
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
 );

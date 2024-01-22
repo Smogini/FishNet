@@ -5,7 +5,7 @@ if (isset($_POST['action'])) {
     include_once '../lib/functions.php';
     
     $dbh = new DatabaseHelper();
-    $dbh->sec_session_start();
+    sec_session_start();
     
     switch($_POST['action']) {
         case 'login':

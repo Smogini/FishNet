@@ -12,7 +12,7 @@ function login() {
         },
         success: function(response) {
             if (response === "login_success") {
-                window.location.href = "../home/home.html";
+                window.location.href = "../home/home.php";
             } else if (response === "missing_data") {
                 alert("Missing username or password");
             } else {

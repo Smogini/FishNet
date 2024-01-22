@@ -5,7 +5,8 @@ function register() {
     let password = document.getElementById("password").value;
     let address = document.getElementById("address").value;
     let dateOfBirth = document.getElementById("dob").value;
-    
+    let prof_pic = document.getElementById("profileImage").value;
+
     $.ajax({
         type: "POST",
         url: "register.php",
@@ -16,13 +17,30 @@ function register() {
             username: username,
             password: password,
             address: address,
-            dob: dateOfBirth
+            dob: dateOfBirth,
+            profile_pic: prof_pic
         },
-        success: function() {
-            window.location.href = "../login/login.html";
+        success: function(response) {
+            if (response === "register_success") {
+                window.location.href = "../login/login.html";
+            } else {
+                // dropUser(username);
+                alert("Error during registration");
+            }
         },
         error: function() {
-            alert("Errore nell caricamento dei dati nel DB");
+            
+        }
+    });
+}
+
+function dropUser(username) {
+    $.ajax({
+        type: "POST",
+        url: "register.php",
+        data: {
+            action: "dropUser",
+            username: username,
         }
     });
 }

@@ -1,3 +1,13 @@
+<?php
+
+include_once '../src/DatabaseHelper.php';
+include_once '../lib/functions.php';
+
+$dbh = new DatabaseHelper();
+
+sec_session_start();
+if(login_check($dbh)) { ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,19 +69,19 @@
     <div class="row fixed-bottom">
         <div class="col-12">
             <div class="btn-group d-flex justify-content-between" role="group">
-                <a href="../home/home.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../home/home.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-house"></i>
                     <span class="ml-2">Home</span>
                 </a>
-                <a href="../search/search.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../search/search.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-search"></i>
                     <span class="ml-2">Search</span>
                 </a>
-                <a href="../post/post.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../post/post.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-pencil"></i>
                     <span class="ml-2">Post</span>
                 </a>
-                <a href="../profile/profile.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../profile/profile.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-person-circle"></i>                    
                     <span class="ml-2">Profile</span>
                 </a>
@@ -83,3 +93,8 @@
 <script src="inputSearch.js"></script>
 </body>
 </html>
+
+<?php 
+} else { 
+    echo 'You are not authorized to access this page, please login. <br/>';
+}?>

@@ -1,3 +1,13 @@
+<?php
+
+include_once '../src/DatabaseHelper.php';
+include_once '../lib/functions.php';
+
+$dbh = new DatabaseHelper();
+
+sec_session_start();
+if(login_check($dbh)) { ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,3 +57,8 @@
 <script src="post.js"></script>
 </body>
 </html>
+
+<?php 
+} else { 
+    echo 'You are not authorized to access this page, please login. <br/>';
+}?>

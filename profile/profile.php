@@ -1,3 +1,13 @@
+<?php
+
+include_once '../src/DatabaseHelper.php';
+include_once '../lib/functions.php';
+
+$dbh = new DatabaseHelper();
+
+sec_session_start();
+if(login_check($dbh)) { ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +28,8 @@
                 <h2 id="nomeUtente"></h2>
                 <p id="dataCreazione"></p>
             </div>
-            <a href="../editProfile/editProfile.html" class="btn btn-primary ml-auto">Edit <i class="bi bi-arrow-right ml-2"></i>
-            </a>
+            <a href="../editProfile/editProfile.html" class="btn btn-primary ml-auto mr-2">Edit <i class="bi bi-arrow-right ml-2"></i></a>
+            <a href="../lib/logout.php" class="btn btn-primary" onclick="return confirm('Are you sure?');">Logout <i class="bi bi-x-circle-fill ml-2"></i></a>
         </div>
     </div>
 
@@ -49,23 +59,23 @@
     <div class="row fixed-bottom">
         <div class="col-12">
             <div class="btn-group d-flex justify-content-between" role="group">
-                <a href="../home/home.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../home/home.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-house"></i>
                     <span class="ml-2">Home</span>
                 </a>
-                <a href="../inputSearch/inputSearch.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../inputSearch/inputSearch.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-search"></i>
                     <span class="ml-2">Search</span>
                 </a>
-                <a href="../post/post.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../post/post.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-pencil"></i>
                     <span class="ml-2">Post</span>
                 </a>
-                <a href="../follower/follower.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../follower/follower.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-person"></i>
                     <span class="ml-2">Follower</span>
                 </a>
-                <a href="../following/following.html" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../following/following.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <i class="bi bi-people"></i>
                     <span class="ml-2">Following</span>
                 </a>
@@ -77,3 +87,8 @@
 <script src="profile.js"></script>
 </body>
 </html>
+
+<?php 
+} else { 
+    echo 'You are not authorized to access this page, please login. <br/>';
+}?>
