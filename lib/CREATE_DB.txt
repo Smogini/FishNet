@@ -1,4 +1,4 @@
-CREATE DATABASE fishnetdb;
+CREATE DATABASE IF NOT EXISTS fishnetdb;
 
 CREATE TABLE `fishnetdb`.`users` (
     `first` VARCHAR(16) NOT NULL ,
@@ -12,9 +12,19 @@ CREATE TABLE `fishnetdb`.`users` (
 );
 
 CREATE TABLE `fishnetdb`.`login_attempts` (
-    `id`INT NOT NULL,
+    `id`INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(15) NOT NULL , 
     `time` VARCHAR(10) NOT NULL , 
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+);
+
+CREATE TABLE `fishnetdb`.`users_images` (
+    `id`INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(15) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
+    `description` VARCHAR(100) NOT NULL,
+    `image` LONGBLOB NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`username`) REFERENCES `users`(`username`)
 );

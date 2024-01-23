@@ -12,15 +12,18 @@ class DatabaseHelper {
         }
     }
 
-    public function insertUser($first, $last, $username, $pass, $addr, $dob, $profile_pic) {
+    public function insertUser($first, $last, $username, $pass, $addr, $dob) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         $pass = hash('sha512', $pass.$random_salt);
-        $profilePicData = file_get_contents($profile_pic['tmp_name']);
-        $query = "INSERT INTO users(first, last, username, password, salt, address, dob, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO users(first, last, username, password, salt, address, dob) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sssssssb", $first, $last, $username, $pass, $random_salt, $addr, $dob, $profilePicData);
-        $stmt->execute();
-        $stmt->close();
+        if ($stmt) {
+            $stmt->bind_param("sssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+        return false;
     }
 
     public function dropUser($username) {
@@ -29,6 +32,39 @@ class DatabaseHelper {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->close();
+    }
+
+    public function insertImage($username, $description) {
+        $image = $_FILES['profile_pic']['tmp_name'];
+        $name = $_FILES['profile_pic']['name'];
+        $image = base64_encode(file_get_contents(addslashes($image)));
+    
+        $query = "INSERT INTO users_images(`username`, `name`, `description`, `image`) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt) {
+            $stmt->bind_param("ssss", $username, $name, $description, $image);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+        return false;
+    }
+
+    public function retrieveImage($username) {
+        $result = array();
+        $query = "SELECT name, description, image FROM users_images WHERE username = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt) {
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($name, $description, $image);
+            $stmt->fetch();
+            $stmt->close();
+
+            array_push($result, $name, $description, $image);
+        }
+        return $result;
     }
 
     public function closeConnection() {

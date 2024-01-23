@@ -15,14 +15,12 @@ if (isset($_POST['action'])) {
                 $password = $_POST['password'];
                 $address = $_POST['address'];
                 $dob = $_POST['dob'];
-                $profile_pic = $_POST['profile_pic'];
 
-                $result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob, $profile_pic);
-
-                if ($result) {
+                $user_result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob);
+                $image_result = $dbHelper->insertImage($dbHelper, $username, $username . "_profile_pic");
+                
+                if ($user_result && $image_result) {
                     echo "register_success";
-                } else {
-                    error_log("Errore query");
                 }
                 $dbHelper->closeConnection();
             // }

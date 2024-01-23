@@ -27,9 +27,8 @@ function login($username, $password, $dbh) {
                 } else {
                     // Password incorretta, registra il tentativo fallito nel DB
                     $now = time();
-                    $id = getLastID($dbh) + 1;
-                    $stmt = $dbh->prepareQuery("INSERT INTO login_attempts (id, username, time) VALUES (?, ?, ?)");
-                    $stmt->bind_param("iss", $id, $user, $now);
+                    $stmt = $dbh->prepareQuery("INSERT INTO login_attempts (username, time) VALUES (?, ?)");
+                    $stmt->bind_param("ss", $user, $now);
                     $stmt->execute();
                     $stmt->close();
                     return false;
@@ -40,19 +39,6 @@ function login($username, $password, $dbh) {
             return false;
         }
     }
-}
-
-function getLastID($dbh) {
-    $query = "SELECT MAX(id) FROM login_attempts";
-    $stmt = $dbh->prepareQuery($query);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($id);
-    $stmt->fetch();
-    if ($id === null) {
-        $id = 0;
-    }
-    return $id;
 }
 
 function checkbrute($username, $dbh) {

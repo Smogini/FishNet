@@ -23,12 +23,15 @@ if(login_check($dbh)) { ?>
 <div class="container-fluid custom-container">
     <div class="row">
         <div class="col-12 d-flex align-items-center">
-            <img id="immagineProfilo" alt="Profilo" class="img-fluid mr-3" src="#">
+            <?php
+                $image_info = $dbh->retrieveImage("mogini");
+                echo '<img src=data:image;base64,' . $image_info[2] . '/>';
+            ?>
             <div>
                 <h2 id="nomeUtente">Nome Utente</h2>
                 <p id="dataCreazione"></p>
             </div>
-            <a href="../editProfile/editProfile.html" class="btn btn-primary ml-auto mr-2">Edit <em class="bi bi-arrow-right ml-2"></em></a>
+            <a href="../editProfile/editProfile.php" class="btn btn-primary ml-auto mr-2">Edit <em class="bi bi-arrow-right ml-2"></em></a>
             <a href="../lib/logout.php" class="btn btn-primary" onclick="return confirm('Are you sure?');">Logout <em class="bi bi-x-circle-fill ml-2"></em></a>
         </div>
     </div>
@@ -84,7 +87,7 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
-<script src="profile.js"></script>
+<!-- <script src="profile.js"></script> -->
 </body>
 </html>
 
