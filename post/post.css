@@ -1,0 +1,38 @@
+.rows {
+    margin: 0.5%;
+    padding: 1%;
+    border: 2px outset lightblue;
+}
+
+.name {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.img-fluid {
+    width: 10%;
+    height: auto;
+    vertical-align: middle;
+}
+
+form {
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#map {
+    height: 50%;
+    margin-bottom: 2%;
+}
+
+button {
+    padding: 1%;
+    background-color: rgb(32, 32, 232);
+    color: white;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: rgb(46, 193, 241);
+}

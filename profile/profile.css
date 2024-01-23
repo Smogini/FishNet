@@ -1,0 +1,49 @@
+.row {
+    margin: 0.5%;
+    padding: 1%;
+    border: 2px outset lightblue;
+}
+
+.custom-container {
+    background-image: url("../img/cool-background.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.img-fluid {
+    width: 7%;
+    height: auto;
+}
+
+.scrollable-field {
+    height: 69vh;
+    overflow-y: auto;
+}
+
+.post {
+    border: 1px solid lightblue;
+    border-radius: 8px;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.post-img {
+    margin: 1%;
+    width: 65%;
+}
+
+.fixed-bottom {
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0px 0px 10px lightblue;
+}
+
+.fixed-bottom button {
+    color: white;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
