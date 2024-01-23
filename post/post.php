@@ -29,7 +29,7 @@ if(login_check($dbh)) { ?>
             <div class="name">
                 <h2 id="nomeSocial">New Post</h2>
             </div>
-            <iem class="bi bi-bell clickable ml-auto" onclick="apriPopupNotifiche()"></em>
+            <em class="bi bi-bell clickable ml-auto" onclick="apriPopupNotifiche()"></em>
         </div>
     </div>
     <div class="rows">
