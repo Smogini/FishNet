@@ -18,9 +18,9 @@ if(login_check($dbh)) { ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="inputSearch.css">
 </head>
-<body>
+<body class="custom-container">
 
-<div class="container-fluid custom-container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
@@ -38,15 +38,15 @@ if(login_check($dbh)) { ?>
     
     <div class="row">
         <div class="form d-flex col-12">
-            <div class="input col-6">
-                <label for="search">Search</label>
+            <!--<div class="input col-6">-->
+                <label for="search"></label>
                 <input class="text mb-2" type="text" name="search" id="search" placeholder="Search">
                 <div class="searchButton mb-2">
                     <a href="../outputSearch/outputSearch.html" class="btn btn-primary">Search <em class="bi bi-search ml-2"></em></a>
                 </div>
-            </div>
-            <div class="radio col-6">
-                <div class="searchRadio col-6 align-items-center">
+            <!--</div>-->
+            <div class="radio col-5 ml-auto">
+                <div class="searchRadio align-items-center">
                     <div class="pref">
                         <h3 class="h3" id="Preferences">Preferences:</h3>
                     </div>
@@ -74,7 +74,7 @@ if(login_check($dbh)) { ?>
                     <em class="bi bi-house"></em>
                     <span class="ml-2">Home</span>
                 </a>
-                <a href="../search/search.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <em class="bi bi-search"></em>
                     <span class="ml-2">Search</span>
                 </a>

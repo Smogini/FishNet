@@ -5,9 +5,13 @@
 }
 
 .row {
-    margin: 0.5%;
     padding: 1%;
     border: 2px outset lightblue;
+}
+
+.d-flex {
+    margin: 0%;
+    padding: 0%;
 }
 
 .img-fluid {
@@ -19,21 +23,22 @@
     height: 73vh;
     overflow-y: auto;
 }
-
-.input {
-    margin: 0.5%;
-    align-items: center;
+.search {
+    vertical-align: center;
+    width: 30%;
+    height: 30%;
 }
 
 .searchButton {
-    max-width: 100%;
+    vertical-align: center;
+    width: 30%;
+    display: inline-block;
 }
 
 .radio {
     margin: 0.5%;
     padding: 1%;
     border: 2px outset lightblue;
-
 
     color: antiquewhite;
     float: right;

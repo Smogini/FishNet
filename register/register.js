@@ -31,9 +31,6 @@ function register() {
                 alert("Error during registration");
             }
         },
-        error: function() {
-            
-        }
     });
 }
 

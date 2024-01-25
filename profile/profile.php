@@ -18,17 +18,20 @@ if(login_check($dbh)) { ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="profile.css">
 </head>
-<body>
+<body class="custom-container">
 
-<div class="container-fluid custom-container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center">
             <?php
-                $image_info = $dbh->retrieveImage("mogini");
-                echo '<img src=data:image;base64,' . $image_info[2] . '/>';
+                $current_user = $_SESSION['username'];
+                $image_info = $dbh->retrieveImage($current_user);
+                echo '<img class="img-fluid" src="data:image;base64,' . $image_info[2] . '" />';
             ?>
             <div>
-                <h2 id="nomeUtente">Nome Utente</h2>
+                <?php
+                    echo '<h2 id="nomeUtente">' . $current_user . '</h2>';
+                ?>
                 <p id="dataCreazione"></p>
             </div>
             <a href="../editProfile/editProfile.php" class="btn btn-primary ml-auto mr-2">Edit <em class="bi bi-arrow-right ml-2"></em></a>

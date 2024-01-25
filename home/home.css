@@ -5,9 +5,13 @@
 }
 
 .row {
-    margin: 0.5%;
     padding: 1%;
     border: 2px outset lightblue;
+}
+
+.d-flex {
+    margin: 0%;
+    padding: 0%;
 }
 
 .img-fluid {

@@ -18,9 +18,9 @@ if(login_check($dbh)) { ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="home.css">
 </head>
-<body>
+<body class="custom-container">
 
-<div class="container-fluid custom-container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">

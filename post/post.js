@@ -21,15 +21,32 @@ document.addEventListener('DOMContentLoaded', function () {
 function confermaReset() {
     if (confirm("Are you sure?")) {
         history.back();
-    } else {
     }
 }
 
-function apriPopupNotifiche() {
-    alert('Funzione non implementata');
-
-}
-
 function post() {
-    alert("Funzione non implementata");
+    let image = document.getElementById("fishImage").files[0];
+    let description = document.getElementById("description").value; 
+    let location = document.getElementById("location").value;
+
+    let formData = new FormData();
+    formData.append("action", "insertPost");
+    formData.append("user_post", image);
+    formData.append("description", description);
+    formData.append("location", location);
+
+    $.ajax({
+        type: "POST",
+        url: "post_function.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response === "post_success") {
+                window.location.href = "../home/home.php";
+            } else {
+                alert("Error on new post!")
+            }
+        }
+    });
 }

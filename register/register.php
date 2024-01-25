@@ -17,7 +17,7 @@ if (isset($_POST['action'])) {
                 $dob = $_POST['dob'];
 
                 $user_result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob);
-                $image_result = $dbHelper->insertImage($dbHelper, $username, $username . "_profile_pic");
+                $image_result = $dbHelper->insertImage($username, $username . "_profile_pic");
                 
                 if ($user_result && $image_result) {
                     echo "register_success";

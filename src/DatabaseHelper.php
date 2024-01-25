@@ -39,7 +39,7 @@ class DatabaseHelper {
         $name = $_FILES['profile_pic']['name'];
         $image = base64_encode(file_get_contents(addslashes($image)));
     
-        $query = "INSERT INTO users_images(`username`, `name`, `description`, `image`) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO users_profile_pics(`username`, `name`, `description`, `image`) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         if ($stmt) {
             $stmt->bind_param("ssss", $username, $name, $description, $image);
@@ -52,7 +52,7 @@ class DatabaseHelper {
 
     public function retrieveImage($username) {
         $result = array();
-        $query = "SELECT name, description, image FROM users_images WHERE username = ?";
+        $query = "SELECT name, description, image FROM users_profile_pics WHERE username = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt) {
             $stmt->bind_param("s", $username);
@@ -65,6 +65,22 @@ class DatabaseHelper {
             array_push($result, $name, $description, $image);
         }
         return $result;
+    }
+
+    public function insertPost($username, $description, $location) {
+        $image = $_FILES['user_post']['tmp_name'];
+        $name = $_FILES['user_post']['name'];
+        $image = base64_encode(file_get_contents(addslashes($image)));
+
+        $query = "INSERT INTO users_posts(username, name, description, image, location) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt) {
+            $stmt->bind_param("sssss", $username, $name, $description, $image, $location);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+        return false;
     }
 
     public function closeConnection() {

@@ -24,25 +24,24 @@ if(login_check($dbh)) { ?>
 
 <div class="container-fluid custom-container">
     <div class="rows">
-        <div class="col-12 d-flex align-items-center justify-content-between">
+        <div class="col-12 d-flex align-items-center">
             <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
             <div class="name">
                 <h2 id="nomeSocial">New Post</h2>
             </div>
-            <em class="bi bi-bell clickable ml-auto" onclick="apriPopupNotifiche()"></em>
         </div>
     </div>
     <div class="rows">
         <div class="form">
-            <form action="post.php" method="post" enctype="multipart/form-data">
-                <label for="fishImage">New Photo:</label>
+            <form enctype="multipart/form-data">
+                <label for="fishImage">Upload Photo:</label>
                 <input type="file" name="fishImage" id="fishImage" accept="image/*" required>
                 
                 <label for="description">Description:</label>
                 <textarea name="description" id="description" rows="4" required></textarea>
         
                 <label for="location">Location:</label>
-                <input type="text" name="location" id="location" required readonly>
+                <input type="text" name="location" id="location" required>
                 
                 <div id="map"></div>
                 <div class="d-flex justify-content-between">
@@ -54,6 +53,7 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="post.js"></script>
 </body>
 </html>
