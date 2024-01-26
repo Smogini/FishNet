@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function confermaReset() {
     if (confirm("Are you sure?")) {
-        history.back();
+        window.location.href= "../home/home.php";
     }
 }
 
@@ -43,10 +43,11 @@ function post() {
         contentType: false,
         success: function(response) {
             if (response === "post_success") {
+                alert("Post saved successfully");
                 window.location.href = "../home/home.php";
             } else {
-                alert("Error on new post!")
+                alert("Error saving the post");
             }
-        }
+        },
     });
 }

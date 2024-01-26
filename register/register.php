@@ -8,22 +8,22 @@ if (isset($_POST['action'])) {
 
     switch ($_POST['action']) {
         case 'insertUser':
-            // if (isset($_POST['username']) && isset($_POST['password'])) {
-                $firstName = $_POST['firstName'];
-                $lastName = $_POST['lastName'];
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $address = $_POST['address'];
-                $dob = $_POST['dob'];
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $address = $_POST['address'];
+            $dob = $_POST['dob'];
+            $image = $_FILES['profile_pic']['tmp_name'];
+            $name = $_FILES['profile_pic']['name'];
 
-                $user_result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob);
-                $image_result = $dbHelper->insertImage($username, $username . "_profile_pic");
-                
-                if ($user_result && $image_result) {
-                    echo "register_success";
-                }
-                $dbHelper->closeConnection();
-            // }
+            $user_result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob);
+            $image_result = $dbHelper->insertImage($username, $name, $username . "_profile_pic", $image);
+            
+            if ($user_result && $image_result) {
+                echo "register_success";
+            }
+            $dbHelper->closeConnection();
             break;
 
         case 'dropUser':
@@ -36,5 +36,3 @@ if (isset($_POST['action'])) {
             break;
     }
 }
-
-?>

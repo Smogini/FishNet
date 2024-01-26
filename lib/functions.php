@@ -106,5 +106,3 @@ function sec_session_start() {
     session_start(); // Avvia la sessione php.
     session_regenerate_id(); // Rigenera la sessione e cancella quella creata in precedenza.
 }
-
-?>

@@ -12,9 +12,11 @@ if (isset($_POST['action'])) {
             $username = $_SESSION['username'];
             $description = $_POST['description'];
             $location = $_POST['location'];
+            $image = $_FILES['user_post']['tmp_name'];
+            $name = $_FILES['user_post']['name'];
             
-            $result = $dbh->insertPost($username, $description, $location);
-
+            $result = $dbh->insertPost($username, $name, $description, $image, $location);
+            
             if ($result) {
                 echo "post_success";
             }
@@ -26,5 +28,3 @@ if (isset($_POST['action'])) {
             break;
         }
 }
-
-?>

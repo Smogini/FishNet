@@ -27,7 +27,6 @@ function register() {
             if (response === "register_success") {
                 window.location.href = "../login/login.html";
             } else {
-                // dropUser(username);
                 alert("Error during registration");
             }
         },

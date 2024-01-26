@@ -1,3 +1,4 @@
+/*Profile Bar*/
 .custom-container {
     background-image: url("../img/cool-background.svg");
     background-size: cover;
@@ -9,19 +10,14 @@
     border: 2px outset lightblue;
 }
 
-.d-flex {
-    margin: 0%;
-    padding: 0%;
-}
-
 .img-fluid {
     max-width: 5%;
     max-height: auto;
     margin-right: 1%;
 }
-
+/*Post Filed*/
 .scrollable-field {
-    height: 69vh;
+    height: 70vh;
     overflow-y: auto;
 }
 
@@ -37,9 +33,18 @@
 
 .post-img {
     margin: 1%;
-    width: 65%;
+    max-width: 75vh;
+    max-height: 75vh;
 }
 
+.post-description {
+    display: inline-block;
+    font-size: medium;
+    color: antiquewhite;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/*Bottom Bar*/
 .fixed-bottom {
     background-color: #f8f9fa;
     padding: 10px;

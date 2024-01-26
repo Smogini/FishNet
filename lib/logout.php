@@ -11,5 +11,3 @@ setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"]
 // Cancella la sessione.
 session_destroy();
 header('Location: ../login/login.html');
-
-?>

@@ -1,7 +1,10 @@
-.rows {
+/*Name Logo*/
+.row-name {
     margin: 0.5%;
     padding: 1%;
     border: 2px outset lightblue;
+
+    height: 15vh;
 }
 
 .name {
@@ -14,15 +17,22 @@
     height: auto;
     vertical-align: middle;
 }
+/*Form*/
+.row-form {
+    margin: 0.5%;
+    padding: 1%;
+    border: 2px outset lightblue;
+
+    height: 85vh;
+}
 
 form {
-    height: 75vh;
     display: flex;
     flex-direction: column;
 }
 
 #map {
-    height: 50%;
+    height: 25vh;
     margin-bottom: 2%;
 }
 

@@ -6,7 +6,9 @@ include_once '../lib/functions.php';
 $dbh = new DatabaseHelper();
 
 sec_session_start();
-if(login_check($dbh)) { ?>
+if(login_check($dbh)) { 
+    $current_user = $_SESSION['username'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,9 +26,8 @@ if(login_check($dbh)) { ?>
     <div class="row">
         <div class="col-12 d-flex align-items-center">
             <?php
-                $current_user = $_SESSION['username'];
-                $image_info = $dbh->retrieveImage($current_user);
-                echo '<img class="img-fluid" src="data:image;base64,' . $image_info[2] . '" />';
+                $image_info = $dbh->retrieveProfilePic($current_user);
+                echo '<img class="img-fluid" src="data:image;base64,' . $image_info['image'] . '" />';
             ?>
             <div>
                 <?php
@@ -42,22 +43,21 @@ if(login_check($dbh)) { ?>
     <div class="row">
         <div class="col-12">
             <div class="scrollable-field">
-                <div class="post">
-                    <div class="d-flex align-items-center">
-                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
-                        <div>
-                            <p>Descrizione del post con testo</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="d-flex align-items-center">
-                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
-                        <div>
-                            <p>Descrizione del post con testo e dettagli...</p>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    $result_post = $dbh->retrievePost($current_user);
+                    foreach ($result_post as $post) {
+                        echo 
+                            '<div class="post">
+                                <div class="d-flex align-items-center">
+                                    <img class="post-img mr-3" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
+                                    <div class="post-description">
+                                        <p>' . $post['description'] . '</p>
+                                        <p>' . $post['location'] . '</p>
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                ?>
             </div>
         </div>
     </div>

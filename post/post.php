@@ -22,8 +22,8 @@ if(login_check($dbh)) { ?>
 </head>
 <body>
 
-<div class="container-fluid custom-container">
-    <div class="rows">
+<div class="container-fluid">
+    <div class="row-name">
         <div class="col-12 d-flex align-items-center">
             <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
             <div class="name">
@@ -31,7 +31,7 @@ if(login_check($dbh)) { ?>
             </div>
         </div>
     </div>
-    <div class="rows">
+    <div class="row-form">
         <div class="form">
             <form enctype="multipart/form-data">
                 <label for="fishImage">Upload Photo:</label>
@@ -45,7 +45,7 @@ if(login_check($dbh)) { ?>
                 
                 <div id="map"></div>
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" type="submit" onclick="post()">Post</button>
+                    <button class="btn btn-primary" type="button" onclick="post()">Post</button>
                     <a class="btn btn-danger" onclick="confermaReset()">Cancel</a>
                 </div>
             </form>
