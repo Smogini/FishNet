@@ -1,32 +1,38 @@
+/*First Row*/
 .custom-container {
     background-image: url("../img/cool-background.svg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.row {
-    padding: 1%;
-    border: 2px outset lightblue;
-}
-
-.d-flex {
-    margin: 0%;
+.container-fluid {
     padding: 0%;
 }
 
+.row-name {
+    height: 11vh;
+    border: 2px outset lightblue;
+}
+
 .img-fluid {
-    width: 10%;
-    height: auto;
+    height: 10vh;
+    margin: 0.5%;
+}
+
+/*Second Row*/
+.row-scroll {
+    border: 2px outset lightblue;
+    height: 82vh;
 }
 
 .profile-img {
-    margin: 1%;
-    width: 5%;
+    margin: 1vh;
+    width: 5vh;
     object-fit: cover;
 }
 
 .scrollable-field {
-    height: 70vh;
+    height: 81vh;
     overflow-y: auto;
 }
 
@@ -42,7 +48,12 @@
 
 .post-img {
     margin: 1%;
-    width: 65%;
+    width: 75vh;
+}
+
+/*Bottom Row*/
+.row-bottom {
+    height: 7vh;
 }
 
 .fixed-bottom {

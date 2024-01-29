@@ -21,7 +21,7 @@ if(login_check($dbh)) { ?>
 <body class="custom-container">
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row-name">
         <div class="col-12 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
@@ -36,7 +36,7 @@ if(login_check($dbh)) { ?>
     </div>
     
     
-    <div class="row">
+    <div class="row-scroll">
         <div class="col-12">
             <div class="scrollable-field">
                 <div class="post">
@@ -60,7 +60,7 @@ if(login_check($dbh)) { ?>
         </div>
     </div>
 
-    <div class="row fixed-bottom">
+    <div class="row-bottom fixed-bottom">
         <div class="col-12">
             <div class="btn-group d-flex justify-content-between" role="group">
                 <a href="../home/home.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
