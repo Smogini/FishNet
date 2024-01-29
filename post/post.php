@@ -20,37 +20,43 @@ if(login_check($dbh)) { ?>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="custom-container">
 
-<div class="container-fluid">
+<div>
     <div class="row-name">
-        <div class="col-12 d-flex align-items-center">
-            <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
-            <div class="name">
-                <h2 id="nomeSocial">New Post</h2>
+        <div class="col-12 align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
+                <div>
+                    <h2 id="nomeSocial">FishNet</h2>
+                </div>
+                <em class="bi bi-bell clickable ml-auto" onclick="apriPopupNotifiche()"></em>
             </div>
         </div>
     </div>
+
     <div class="row-form">
         <div class="form">
             <form enctype="multipart/form-data">
-                <label for="fishImage">Upload Photo:</label>
-                <input type="file" name="fishImage" id="fishImage" accept="image/*" required>
+                <label class="m-2" for="fishImage">Upload Photo:</label>
+                <input class="m-2" type="file" name="fishImage" id="fishImage" accept="image/*" required>
                 
-                <label for="description">Description:</label>
-                <textarea name="description" id="description" rows="4" required></textarea>
+                <label class="m-2" for="description">Description:</label>
+                <textarea class="m-2" name="description" id="description" rows="4" required></textarea>
         
-                <label for="location">Location:</label>
-                <input type="text" name="location" id="location" required>
+                <label class="m-2" for="location">Location:</label>
+                <input class="m-2" type="text" name="location" id="location" required>
                 
-                <div id="map"></div>
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary" type="button" onclick="post()">Post</button>
-                    <a class="btn btn-danger" onclick="confermaReset()">Cancel</a>
-                </div>
+                <div class="m-2" id="map"></div>
             </form>
         </div>
     </div>
+    <div class="row-bottom fixed-bottom d-flex">
+        <button class="custom-button btn btn-primary" type="button" onclick="post()">Post</button>
+        <a class="custom-button btn btn-danger ml-auto" onclick="confermaReset()">Cancel</a> 
+    </div>
+</div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

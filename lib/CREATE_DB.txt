@@ -49,3 +49,11 @@ CREATE TABLE `fishnetdb`.`liked_posts` (
     FOREIGN KEY (`post_id`) REFERENCES `users_posts`(`id`),
     FOREIGN KEY (`username`) REFERENCES `users`(`username`)
 );
+
+CREATE TABLE `fishnetdb`.`user_followers` (
+    `follower_username` VARCHAR(30) NOT NULL,
+    `followed_username` VARCHAR(30) NOT NULL,
+    PRIMARY KEY (`follower_username`, `followed_username`),
+    FOREIGN KEY (`follower_username`) REFERENCES `users`(`username`),
+    FOREIGN KEY (`followed_username`) REFERENCES `users`(`username`)
+);

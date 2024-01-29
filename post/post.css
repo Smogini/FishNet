@@ -1,29 +1,18 @@
-/*Name Logo*/
+/*First Row*/
 .row-name {
-    margin: 0.5%;
-    padding: 1%;
+    height: 11vh;
     border: 2px outset lightblue;
-
-    height: 15vh;
-}
-
-.name {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .img-fluid {
-    width: 10%;
-    height: auto;
-    vertical-align: middle;
+    width: 10vh;
+    margin: 0.5%;
 }
+
 /*Form*/
 .row-form {
-    margin: 0.5%;
-    padding: 1%;
+    height: 79vh;
     border: 2px outset lightblue;
-
-    height: 85vh;
 }
 
 form {
@@ -32,17 +21,26 @@ form {
 }
 
 #map {
-    height: 25vh;
+    height: 30vh;
     margin-bottom: 2%;
 }
 
-button {
-    padding: 1%;
-    background-color: rgb(32, 32, 232);
-    color: white;
-    border-radius: 4px;
+/*Bottom Row*/
+.row-bottom {
+    height: 10vh;
+    border: 2px outset lightblue;
+    justify-content: center;
+    align-items: center;
 }
 
-button:hover {
-    background-color: rgb(46, 193, 241);
+.fixed-bottom {
+    background-color: #f8f9fa;
+    box-shadow: 0px 0px 10px lightblue;
+}
+
+.custom-button {
+    width: 20vh;
+    color: white;
+    font-size: 16px;
+    margin: 3%;
 }

@@ -13,7 +13,7 @@ if(login_check($dbh)) { ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet inputSearch</title>
+    <title>FishNet Search</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="inputSearch.css">
@@ -35,24 +35,24 @@ if(login_check($dbh)) { ?>
         </div>
     </div>
     
-    
     <div class="row">
         <div class="form d-flex col-12">
-            <!--<div class="input col-6">-->
+            <div class="input col-6">
                 <label for="search"></label>
                 <input class="text mb-2" type="text" name="search" id="search" placeholder="Search">
                 <div class="searchButton mb-2">
-                    <a href="../outputSearch/outputSearch.html" class="btn btn-primary">Search <em class="bi bi-search ml-2"></em></a>
+                    <button type="button" class="btn btn-primary" onclick="search()">Search <em class="bi bi-search ml-2"></em></button>
                 </div>
-            <!--</div>-->
+                <div id="search_result"></div>
+            </div>
             <div class="radio col-5 ml-auto">
                 <div class="searchRadio align-items-center">
                     <div class="pref">
                         <h3 class="h3" id="Preferences">Preferences:</h3>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="person" name="searchRadio" value="Person">
-                        <label for="person">Person</label>
+                        <input type="radio" id="account" name="searchRadio" value="Account">
+                        <label for="person">Account</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="fish" name="searchRadio" value="Fish">
@@ -91,6 +91,7 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="inputSearch.js"></script>
 </body>
 </html>
