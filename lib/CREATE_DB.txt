@@ -13,32 +13,32 @@ CREATE TABLE `fishnetdb`.`users` (
 );
 
 CREATE TABLE `fishnetdb`.`login_attempts` (
-    `id`INT NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(30) NOT NULL , 
-    `time` VARCHAR(10) NOT NULL , 
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(30) NOT NULL, 
+    `time` VARCHAR(10) NOT NULL, 
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `fishnetdb`.`users_profile_pics` (
-    `id`INT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(30) NOT NULL,
     `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(100) NOT NULL,
     `image` LONGBLOB NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `fishnetdb`.`users_posts` (
-    `id`INT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(30) NOT NULL,
     `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(100) NOT NULL,
     `image` LONGBLOB NOT NULL,
     `location` VARCHAR(40) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `fishnetdb`.`liked_posts` (
@@ -46,14 +46,14 @@ CREATE TABLE `fishnetdb`.`liked_posts` (
     `post_id` INT NOT NULL,
     `username` VARCHAR(30) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`post_id`) REFERENCES `users_posts`(`id`),
-    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+    FOREIGN KEY (`post_id`) REFERENCES `users_posts`(`id`) ON UPDATE CASCADE,
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `fishnetdb`.`user_followers` (
     `follower_username` VARCHAR(30) NOT NULL,
     `followed_username` VARCHAR(30) NOT NULL,
     PRIMARY KEY (`follower_username`, `followed_username`),
-    FOREIGN KEY (`follower_username`) REFERENCES `users`(`username`),
-    FOREIGN KEY (`followed_username`) REFERENCES `users`(`username`)
+    FOREIGN KEY (`follower_username`) REFERENCES `users`(`username`) ON UPDATE CASCADE,
+    FOREIGN KEY (`followed_username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );

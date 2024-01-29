@@ -77,19 +77,25 @@ class DatabaseHelper {
     public function editUser($first, $last, $username, $pass, $addr, $dob, $active_username) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         $pass = hash('sha512', $pass.$random_salt);
-        $query = "UPDATE users SET(first, last, username, password, salt, address, dob) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE username ='?'";
+        $query = "UPDATE users SET first = ?, last = ?, username = ?, password = ?, salt = ?, address = ?, dob = ? WHERE username = ?";
         $stmt = $this->conn->prepare($query);
-
+    
         if (!$stmt) {
-            error_log("Error preparing the query");
+            error_log("Errore durante la preparazione dello statement: " . $this->conn->error);
             return false;
         }
-
+    
         $stmt->bind_param("ssssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob, $active_username);
-        $stmt->execute();
+        $success = $stmt->execute();
         $stmt->close();
+    
+        if (!$success) {
+            error_log("Errore durante l'esecuzione della query: " . $this->conn->error);
+            return false;
+        }
         return true;
     }
+    
 
     public function dropUser($username) {
         $query = "DELETE FROM users WHERE username = ?";

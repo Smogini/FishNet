@@ -60,6 +60,7 @@ if(login_check($dbh)) { ?>
 </div>
 
 <script src="editProfile.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>
 
