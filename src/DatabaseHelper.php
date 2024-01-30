@@ -192,6 +192,76 @@ class DatabaseHelper {
         return $result;
     }
 
+    public function insertFollower($current_user, $followed_username) {
+        $query = "INSERT INTO user_followers VALUES (?, ?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $current_user, $followed_username);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    public function removeFollower($current_user, $followed_username) {
+        $query = "DELETE FROM user_followers WHERE follower_username = ? AND followed_username = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $current_user, $followed_username);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    public function retrieveFollowers($current_user) {
+        $query = "SELECT followed_username FROM user_followers WHERE follower_username = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        $stmt->bind_param("s", $current_user);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($username);
+        $result = array();
+        while ($stmt->fetch()) {
+            $result[] = $username;
+        }
+        $stmt->close();
+
+        return $result;
+    }
+
+    public function isFollowing($current_user, $followed_username) {
+        $query = "SELECT * FROM user_followers WHERE follower_username = ? AND followed_username = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $current_user, $followed_username);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows == 1) {
+            $stmt->close();
+            return true;
+        }
+        $stmt->close();
+        return false;
+    }
+
     public function closeConnection() {
         if ($this->conn) {
             $this->conn->close();

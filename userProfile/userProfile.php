@@ -6,56 +6,58 @@ include_once '../lib/functions.php';
 $dbh = new DatabaseHelper();
 
 sec_session_start();
-if(login_check($dbh)) { ?>
+if(login_check($dbh)) { 
+    $current_user = $_SESSION['username'];
+    $user_visited = $_GET['user_visited'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet Home</title>
+    <title>FishNet Profile</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="userProfile.css">
 </head>
 <body class="custom-container">
 
 <div class="container-fluid">
     <div class="row-name">
-        <div class="col-12 d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center">
-                <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
-                <div>
-                    <h2 id="nomeSocial">FishNet</h2>
-                </div>
+        <div class="col-12 d-flex align-items-center">
+            <?php
+                $image_info = $dbh->retrieveProfilePic($user_visited);
+                echo '<img class="img-fluid" src="data:image;base64,' . $image_info['image'] . '" />';
+            ?>
+            <div>
+                <?php
+                    echo '<h2 id="nomeUtente">' . $user_visited . '</h2>';
+                ?>
+                <p id="dataCreazione"></p>
             </div>
-            <div class="d-flex align-items-center">
-                <em class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></em>
-            </div>
+            <button type="button" id="followButton" class="btn btn-primary ml-auto mr-2" onclick="follow()">Follow</button>
         </div>
     </div>
-    
-    
+
     <div class="row-scroll">
         <div class="col-12">
             <div class="scrollable-field">
-                <div class="post">
-                    <div class="d-flex align-items-center mb-3">
-                        <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="#">
-                        <div>
-                            <h2 id="nomeUtente">Nome Utente</h2>
-                            <p id="dataCreazione"></p>
-                        </div>
-                        <a href="../userProfile/userProfile.php" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></a>
-                    </div>
-            
-                    <div class="d-flex align-items-center">
-                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
-                        <div>
-                            <p>Descrizione del post con testo</p>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    $result_post = $dbh->retrievePost($user_visited);
+                    foreach ($result_post as $post) {
+                        echo 
+                            '<div class="post">
+                                <div class="d-flex align-items-center">
+                                    <img class="post-img mr-3" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
+                                    <div class="post-description">
+                                        <p>' . $post['description'] . '</p>
+                                        <p>' . $post['location'] . '</p>
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -84,7 +86,8 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
-<script src="home.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="userProfile.js"></script>
 </body>
 </html>
 

@@ -18,6 +18,10 @@ function search() {
         processData: false,
         contentType: false,
         success: function(response) {
+            if (response === "user_not_found") {
+                alert("User not found");
+                return;
+            }
             $("#search_result").html(response);
         },
     });

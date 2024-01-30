@@ -1,47 +1,60 @@
+/*First Row*/
 .custom-container {
     background-image: url("../img/cool-background.svg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.row {
-    padding: 1%;
-    border: 2px outset lightblue;
-}
-
-.d-flex {
-    margin: 0%;
+.container-fluid {
     padding: 0%;
 }
 
+.row-name {
+    height: 11vh;
+    border: 2px outset lightblue;
+}
+
 .img-fluid {
-    width: 10%;
-    height: auto;
+    height: 10vh;
+    margin: 0.5%;
 }
 
-.form {
-    height: 73vh;
-    overflow-y: auto;
-}
-.search {
-    vertical-align: center;
-    width: 30%;
-    height: 30%;
+/*Second Row*/
+.row-search {
+    border: 2px outset lightblue;
+    height: 82vh;
 }
 
-.searchButton {
-    vertical-align: center;
-    width: 30%;
-    display: inline-block;
+.input {
+    border: 2px outset lightblue;
+    height: 75vh;
 }
 
 .radio {
-    margin: 0.5%;
-    padding: 1%;
     border: 2px outset lightblue;
+    height: 30vh;
+}
 
-    color: antiquewhite;
-    float: right;
+.scrollable-field {
+    height: 57vh;
+    overflow-y: auto;
+}
+
+.custom-result {
+    border: 2px outset lightblue;
+    height: 10vh;
+    margin-top: 2%;
+}
+
+.profile-img {
+    margin: 1vh;
+    width: 5vh;
+    object-fit: cover;
+}
+
+/*Bottom Row*/
+.row-bottom {
+    height: 7vh;
 }
 
 .fixed-bottom {

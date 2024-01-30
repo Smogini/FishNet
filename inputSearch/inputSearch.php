@@ -21,7 +21,7 @@ if(login_check($dbh)) { ?>
 <body class="custom-container">
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row-name">
         <div class="col-12 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
@@ -35,19 +35,19 @@ if(login_check($dbh)) { ?>
         </div>
     </div>
     
-    <div class="row">
-        <div class="form d-flex col-12">
-            <div class="input col-6">
+    <div class="row-search">
+        <div class="form d-flex col-12 mt-3">
+            <div class="input col-6 mt-1">
                 <label for="search"></label>
-                <input class="text mb-2" type="text" name="search" id="search" placeholder="Search">
+                <input class="text mb-2 mt-2" type="text" name="search" id="search" placeholder="Search">
                 <div class="searchButton mb-2">
                     <button type="button" class="btn btn-primary" onclick="search()">Search <em class="bi bi-search ml-2"></em></button>
                 </div>
-                <div id="search_result"></div>
+                <div class="scrollable-field" id="search_result"></div>
             </div>
-            <div class="radio col-5 ml-auto">
+            <div class="radio col-6 mt-1 ml-1">
                 <div class="searchRadio align-items-center">
-                    <div class="pref">
+                    <div class="pref mt-2">
                         <h3 class="h3" id="Preferences">Preferences:</h3>
                     </div>
                     <div class="radio-option">
@@ -67,7 +67,7 @@ if(login_check($dbh)) { ?>
         </div>
     </div>
 
-    <div class="row fixed-bottom">
+    <div class="row-bottom fixed-bottom">
         <div class="col-12">
             <div class="btn-group d-flex justify-content-between" role="group">
                 <a href="../home/home.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
@@ -82,7 +82,7 @@ if(login_check($dbh)) { ?>
                     <em class="bi bi-pencil"></em>
                     <span class="ml-2">Post</span>
                 </a>
-                <a href="../profile/profile.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
+                <a href="../personalProfile/personalProfile.php" class="btn btn-primary d-flex flex-fill justify-content-center align-items-center rounded ml-2 mr-2">
                     <em class="bi bi-person-circle"></em>                    
                     <span class="ml-2">Profile</span>
                 </a>

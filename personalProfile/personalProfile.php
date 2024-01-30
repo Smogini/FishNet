@@ -18,7 +18,7 @@ if(login_check($dbh)) {
     <title>FishNet Profile</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="personalProfile.css">
 </head>
 <body class="custom-container">
 
@@ -90,7 +90,6 @@ if(login_check($dbh)) {
     </div>
 </div>
 
-<!-- <script src="profile.js"></script> -->
 </body>
 </html>
 

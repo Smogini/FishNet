@@ -23,11 +23,9 @@ function editProfile() {
         contentType: false,
         success: function(response) {
             if (response === "edit_success") {
-                window.location.href = "../profile/profile.php";
-            } else if(response === "result not true") {
-                alert("Error during editing");
+                window.location.href = "../personalProfile/personalProfile.php";
             } else {
-                alert("non ho avuto risposta");
+                alert("Error during editing");
             }
         },
     });
