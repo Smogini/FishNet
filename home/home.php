@@ -6,7 +6,11 @@ include_once '../lib/functions.php';
 $dbh = new DatabaseHelper();
 
 sec_session_start();
-if(login_check($dbh)) { ?>
+if(login_check($dbh)) { 
+    $current_user = $_SESSION['username'];
+    $following = $dbh->retrieveFollowings($current_user);
+    $home_feed = $dbh->retrieveHomeFeed($current_user);
+?>  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,22 +43,38 @@ if(login_check($dbh)) { ?>
     <div class="row-scroll">
         <div class="col-12">
             <div class="scrollable-field">
-                <div class="post">
-                    <div class="d-flex align-items-center mb-3">
-                        <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="#">
-                        <div>
-                            <h2 id="nomeUtente">Nome Utente</h2>
-                            <p id="dataCreazione"></p>
-                        </div>
-                        <a href="../userProfile/userProfile.php" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></a>
-                    </div>
-            
-                    <div class="d-flex align-items-center">
-                        <img src="path-to-post-image.jpg" alt="Post Image" class="post-img mr-3">
-                        <div>
-                            <p>Descrizione del post con testo</p>
-                        </div>
-                    </div>
+                <div>
+                    <?php
+
+                    if (count($home_feed) > 0) {
+                        foreach ($home_feed as $post) {
+                            echo
+                            '<form method="get" action="../userProfile/userProfile.php">
+                                <div class="custom-post">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $post['profile_pic'] . '">
+                                        <div>
+                                            <h2>' . $post['username'] . '</h2>
+                                            <p id="dataCreazione"></p>
+                                        </div>
+                                        <input type="hidden" name="user_visited" value="' . $post['username'] . '">
+                                        <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="data:image;base64,' . $post['image'] . '" alt="Post Image" class="post-img mr-3">
+                                        <input type="hidden" name="post_id" value="' . $post['post_id'] . '">
+                                        <div>
+                                            <p>' . $post['description'] . '</p>
+                                            <p>' . $post['location'] . '</p>
+                                            <button type="button" name="likeButton" data-post-id="' . $post['post_id'] . '" class="custom-like btn btn-primary ml-auto mr-2"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>';
+                        }
+                    }
+                    
+                    ?>
                 </div>
             </div>
         </div>
@@ -84,6 +104,7 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="home.js"></script>
 </body>
 </html>

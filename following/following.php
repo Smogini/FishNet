@@ -8,7 +8,7 @@ $dbh = new DatabaseHelper();
 sec_session_start();
 if(login_check($dbh)) { 
     $current_user = $_SESSION['username'];
-    $following = $dbh->retrieveFollowers($current_user);
+    $following = $dbh->retrieveFollowings($current_user);
 ?>
 
 <!DOCTYPE html>
@@ -62,14 +62,6 @@ if(login_check($dbh)) {
                     }
                     
                     ?>
-                    <!-- <div class="d-flex align-items-center mb-3">
-                        <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="#">
-                        <div>
-                            <h2 id="nomeUtente">Nome Utente</h2>
-                            <p id="dataCreazione"></p>
-                        </div>
-                        <a href="../profile/profile.html" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></a>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -103,7 +95,6 @@ if(login_check($dbh)) {
     </div>
 </div>
 
-<script src="following.js"></script>
 </body>
 </html>
 

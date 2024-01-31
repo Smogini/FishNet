@@ -36,7 +36,7 @@ if(login_check($dbh)) {
                 ?>
                 <p id="dataCreazione"></p>
             </div>
-            <button type="button" id="followButton" class="btn btn-primary ml-auto mr-2" onclick="follow()">Follow</button>
+            <button type="button" id="followButton" class="btn btn-primary ml-auto mr-2"></button>
         </div>
     </div>
 

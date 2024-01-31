@@ -192,6 +192,43 @@ class DatabaseHelper {
         return $result;
     }
 
+    public function retrieveHomeFeed($username) {
+        $result = array();
+        $query = "  SELECT P.name, P.description, P.image, P.location, PF.image, PF.username, P.id
+                    FROM users_posts AS P, user_followers AS F, users_profile_pics AS PF
+                    WHERE P.username = F.followed_username
+                    AND PF.username = F.followed_username
+                    AND F.follower_username = ?
+                    ORDER BY P.id DESC";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return null;
+        }
+
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($name, $description, $image, $location, $profile_pic, $username, $post_id);
+
+        while ($stmt->fetch()) {
+            $post = array(
+                'name' => $name,
+                'description' => $description,
+                'image' => $image,
+                'location' => $location,
+                'profile_pic' => $profile_pic,
+                'username' => $username,
+                'post_id' => $post_id
+            );
+            $result[] = $post;
+        }
+        
+        $stmt->close();
+        return $result;
+    }
+
     public function insertFollower($current_user, $followed_username) {
         $query = "INSERT INTO user_followers VALUES (?, ?)";
         $stmt = $this->conn->prepare($query);
@@ -222,8 +259,28 @@ class DatabaseHelper {
         return true;
     }
 
-    public function retrieveFollowers($current_user) {
+    public function retrieveFollowings($current_user) {
         $query = "SELECT followed_username FROM user_followers WHERE follower_username = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        $stmt->bind_param("s", $current_user);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($username);
+        $result = array();
+        while ($stmt->fetch()) {
+            $result[] = $username;
+        }
+        $stmt->close();
+
+        return $result;
+    }
+
+    public function retrieveFollowers($current_user) {
+        $query = "SELECT follower_username FROM user_followers WHERE followed_username = ?";
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
             error_log("Error preparing the query");
@@ -255,6 +312,44 @@ class DatabaseHelper {
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows == 1) {
+            $stmt->close();
+            return true;
+        }
+        $stmt->close();
+        return false;
+    }
+
+    public function isLiking($current_user, $post_id) {
+        $query = "SELECT * FROM liked_posts WHERE post_id = ? AND username = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $post_id, $current_user);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows == 1) {
+            $stmt->close();
+            return true;
+        }
+        $stmt->close();
+        return false;
+    }
+
+    public function insertLike($post_id, $current_user) {
+        $query = "INSERT INTO liked_posts VALUES (?,?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $post_id, $current_user);
+        if ($stmt->execute()) {
             $stmt->close();
             return true;
         }

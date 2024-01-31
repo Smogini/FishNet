@@ -6,14 +6,17 @@ include_once '../lib/functions.php';
 $dbh = new DatabaseHelper();
 
 sec_session_start();
-if(login_check($dbh)) { ?>
+if(login_check($dbh)) { 
+    $current_user = $_SESSION['username'];
+    $followers = $dbh->retrieveFollowers($current_user);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet Follower</title>
+    <title>FishNet Following</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="follower.css">
@@ -26,7 +29,7 @@ if(login_check($dbh)) { ?>
             <div class="d-flex align-items-center">
                 <img id="logoSocial" alt="Logo Social" class="img-fluid mr-3" src="../img/logo.png">
                 <div>
-                    <h2 id="nomeSocial">Follower</h2>
+                    <h2 id="nomeSocial">Followers</h2>
                 </div>
             </div>
             <div class="d-flex align-items-center">
@@ -40,14 +43,25 @@ if(login_check($dbh)) { ?>
         <div class="col-12">
             <div class="scrollable-field">
                 <div class="follower">
-                    <div class="d-flex align-items-center mb-3">
-                        <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="#">
-                        <div>
-                            <h2 id="nomeUtente">Nome Utente</h2>
-                            <p id="dataCreazione"></p>
-                        </div>
-                        <a href="../profile/profile.html" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></a>
-                    </div>
+                    <?php
+                    
+                    foreach ($followers as $user) {
+                        $profile_pic = $dbh->retrieveProfilePic($user);
+                        echo 
+                        '<form method="get" action="../userProfile/userProfile.php">
+                            <div class="d-flex align-items-center mb-3">
+                                <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $profile_pic['image'] . '">
+                                <div>
+                                    <h2>' . $user . '</h2>
+                                    <p id="dataCreazione"></p>
+                                </div>
+                                <input type="hidden" name="user_visited" value="' . $user . '">
+                                <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
+                            </div>
+                        </form>';
+                    }
+                    
+                    ?>
                 </div>
             </div>
         </div>
@@ -81,11 +95,10 @@ if(login_check($dbh)) { ?>
     </div>
 </div>
 
-<script src="follower.js"></script>
 </body>
 </html>
 
 <?php 
 } else { 
-    echo 'You are not authorized to access this page, please login. <br/>'; 
+    echo 'You are not authorized to access this page, please login. <br/>';
 }?>
