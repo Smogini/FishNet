@@ -339,8 +339,26 @@ class DatabaseHelper {
         return false;
     }
 
-    public function insertLike($post_id, $current_user) {
-        $query = "INSERT INTO liked_posts VALUES (?,?)";
+    public function insertLike($current_user, $post_id) {
+        $query = "INSERT INTO liked_posts(post_id, username) VALUES (?, ?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("ss", $post_id, $current_user);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        $stmt->close();
+        return false;
+    }
+
+    public function removeLike($current_user, $post_id) {
+        $query = "DELETE FROM liked_posts WHERE post_id = ? AND username = ?";
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {

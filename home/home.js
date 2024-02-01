@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     likeButtons.forEach(function(button) {
         let post_id = button.dataset.postId;
+
         let formData = new FormData();
         formData.append("action", "liking");
         formData.append("post_id", post_id);
@@ -20,18 +21,18 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function(response) {
                 if (response === "liking_success") {
                     button.innerHTML = '<em class="bi bi-heart-fill"></em>';
-                    button.setAttribute("onclick", "removeLike()");
+                    button.setAttribute("onclick", "removeLike('" + post_id + "')");
                 } else if (response === "not_liking") {
                     button.innerHTML = '<em class="bi bi-heart"></em>';
-                    button.setAttribute("onclick", "addLike()");
+                    button.setAttribute("onclick", "addLike('" + post_id + "')");
                 }
             },
         });
     });
 });
 
-// TODO
-function addLike() {
+function addLike(post_id) {
+    let button = $(this);
     let formData = new FormData();
     formData.append("action", "addLike");
     formData.append("post_id", post_id);
@@ -43,19 +44,23 @@ function addLike() {
         processData: false,
         contentType: false,
         success: function(response) {
-            if (response === "isLiking_success") {
-                $("#followButton").attr("onclick", "removeFollow()");
-            } else if (response === "unfollowed") {
-                $("#followButton").attr("onclick", "follow()");
+            if (response === "like_added") {
+                button.html('<em class="bi bi-heart-fill"></em>');
+                button.attr("onclick", "removeLike('" + post_id + "')");
+                location.reload();
+                alert("Like added");
+            } else {
+                alert("Couldn't add the like!");
             }
         },
     });
 }
 
-// TODO
-function removeLike() {
+function removeLike(post_id) {
+    let button = $(this);
     let formData = new FormData();
     formData.append("action", "removeLike");
+    formData.append("post_id", post_id);
 
     $.ajax({
         type: "POST",
@@ -64,12 +69,13 @@ function removeLike() {
         processData: false,
         contentType: false,
         success: function(response) {
-            if (response === "isLiking_success") {
-                $("#followButton").text("Remove Follow");
-                $("#followButton").attr("onclick", "removeFollow()");
-            } else if (response === "unfollowed") {
-                $("#followButton").text("Follow");
-                $("#followButton").attr("onclick", "follow()");
+            if (response === "like_removed") {
+                button.html('<em class="bi bi-heart"></em>');
+                button.attr("onclick", "addLike('" + post_id + "')");
+                location.reload();
+                alert("Like removed");
+            } else {
+                alert("Couldn't remove the like!");
             }
         },
     });

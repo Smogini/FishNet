@@ -45,7 +45,6 @@ if(login_check($dbh)) {
             <div class="scrollable-field">
                 <div>
                     <?php
-
                     if (count($home_feed) > 0) {
                         foreach ($home_feed as $post) {
                             echo
@@ -62,7 +61,6 @@ if(login_check($dbh)) {
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <img src="data:image;base64,' . $post['image'] . '" alt="Post Image" class="post-img mr-3">
-                                        <input type="hidden" name="post_id" value="' . $post['post_id'] . '">
                                         <div>
                                             <p>' . $post['description'] . '</p>
                                             <p>' . $post['location'] . '</p>
@@ -73,7 +71,6 @@ if(login_check($dbh)) {
                             </form>';
                         }
                     }
-                    
                     ?>
                 </div>
             </div>

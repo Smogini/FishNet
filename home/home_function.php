@@ -27,9 +27,14 @@ if (isset($_POST['action'])) {
             }
             break;
         case 'removeLike':
+
+            $result = $dbh->removeLike($_SESSION['username'], $_POST['post_id']);
+
+            if ($result) {
+                echo "like_removed";
+            }
+            break;
+        default:
             break;
     }
-
 }
-
-?>
