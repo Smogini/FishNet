@@ -42,25 +42,24 @@ if(login_check($dbh)) {
     <div class="row-scroll">
         <div class="col-12">
             <div class="scrollable-field">
-                <div class="follower">
                     <?php
-                    
                     foreach ($followers as $user) {
                         $profile_pic = $dbh->retrieveProfilePic($user);
                         echo 
-                        '<form method="get" action="../userProfile/userProfile.php">
-                            <div class="d-flex align-items-center mb-3">
-                                <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $profile_pic['image'] . '">
-                                <div>
-                                    <h2>' . $user . '</h2>
-                                    <p id="dataCreazione"></p>
+                        '<div class="follower">
+                            <form method="get" action="../userProfile/userProfile.php">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $profile_pic['image'] . '">
+                                    <div>
+                                        <h2>' . $user . '</h2>
+                                        <p id="dataCreazione"></p>
+                                    </div>
+                                    <input type="hidden" name="user_visited" value="' . $user . '">
+                                    <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
                                 </div>
-                                <input type="hidden" name="user_visited" value="' . $user . '">
-                                <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
-                            </div>
-                        </form>';
+                            </form>
+                        </div>';
                     }
-                    
                     ?>
                 </div>
             </div>
