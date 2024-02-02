@@ -45,10 +45,13 @@ function addLike(post_id) {
         contentType: false,
         success: function(response) {
             if (response === "like_added") {
+                onbeforeunload();
+
                 button.html('<em class="bi bi-heart-fill"></em>');
                 button.attr("onclick", "removeLike('" + post_id + "')");
+                
                 location.reload();
-                alert("Like added");
+                onload();
             } else {
                 alert("Couldn't add the like!");
             }
@@ -70,13 +73,33 @@ function removeLike(post_id) {
         contentType: false,
         success: function(response) {
             if (response === "like_removed") {
+                onbeforeunload();
+
                 button.html('<em class="bi bi-heart"></em>');
                 button.attr("onclick", "addLike('" + post_id + "')");
+                
                 location.reload();
-                alert("Like removed");
+                onload();
             } else {
                 alert("Couldn't remove the like!");
             }
         },
     });
+}
+
+window.onbeforeunload = function () {
+    var scrollPos;
+    let scroll = document.getElementById("scrollable");
+    scrollPos = scroll.scrollTop;
+    document.cookie = "scrollTop=" + scrollPos + "URL=" + window.location.href;
+}
+
+window.onload = function () {
+    let scroll = document.getElementById("scrollable");
+    if (document.cookie.includes(window.location.href)) {
+        if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {
+            var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/);
+            scroll.scrollTop = parseInt(arr[1]);
+        }
+    }
 }

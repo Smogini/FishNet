@@ -42,7 +42,7 @@ if(login_check($dbh)) {
     
     <div class="row-scroll">
         <div class="col-12">
-            <div class="scrollable-field">
+            <div id="scrollable" class="scrollable-field">
                 <div>
                     <?php
                     if (count($home_feed) > 0) {
@@ -70,6 +70,8 @@ if(login_check($dbh)) {
                                 </div>
                             </form>';
                         }
+                    } else {
+
                     }
                     ?>
                 </div>

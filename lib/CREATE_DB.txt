@@ -1,5 +1,3 @@
-DROP DATABASE fishnetdb;
-
 CREATE DATABASE IF NOT EXISTS fishnetdb;
 
 CREATE TABLE `fishnetdb`.`users` (
