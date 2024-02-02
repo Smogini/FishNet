@@ -87,6 +87,33 @@ function removeLike(post_id) {
     });
 }
 
+function addComment(post_id) {
+    let comment = prompt("Insert your comment", "");
+    comment = comment.trim();
+    if (comment.length === 0) {
+        return;
+    }
+    let formData = new FormData();
+    formData.append("action", "insertComment");
+    formData.append("comment", comment);
+    formData.append("post_id", post_id);
+
+    $.ajax({
+        type: "POST",
+        url: "home_function.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response === "comment_added") {
+                location.reload();
+            } else {
+                alert("Couldn't add the comment!");
+            }
+        },
+    });
+}
+
 window.onbeforeunload = function () {
     var scrollPos;
     let scroll = document.getElementById("scrollable");

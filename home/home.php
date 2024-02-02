@@ -20,6 +20,7 @@ if(login_check($dbh)) {
     <title>FishNet Home</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../src/style.css">
     <link rel="stylesheet" href="home.css">
 </head>
 <body class="custom-container">
@@ -42,7 +43,7 @@ if(login_check($dbh)) {
     
     <div class="row-scroll">
         <div class="col-12">
-            <div id="scrollable" class="scrollable-field">
+            <div id="scrollable" class="custom-scrollable-field">
                 <div>
                     <?php
                     if (count($home_feed) > 0) {
@@ -59,12 +60,21 @@ if(login_check($dbh)) {
                                         <input type="hidden" name="user_visited" value="' . $post['username'] . '">
                                         <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
                                     </div>
-                                    <div class="d-flex align-items-center">
-                                        <img src="data:image;base64,' . $post['image'] . '" alt="Post Image" class="post-img mr-3">
-                                        <div>
+                                    <div class="d-flex">
+                                        <img src="data:image;base64,' . $post['image'] . '" alt="Post Image" class="post-img mr-3 w-50">
+                                        <div class="w-50">
                                             <p>' . $post['description'] . '</p>
                                             <p>' . $post['location'] . '</p>
                                             <button type="button" name="likeButton" data-post-id="' . $post['post_id'] . '" class="custom-like btn btn-primary ml-auto mr-2"></button>
+                                            <button type="button" name="commentButton" data-post-id="' . $post['post_id'] . '" class="custom-comment btn btn-primary ml-auto mr-2" onclick="addComment(' . $post['post_id'] . ')"><em class="bi bi-chat-dots-fill"></em></button>';
+                                            $comment_feed = $dbh->retrieveComments($post['post_id']);
+                                            echo '<div class="scrollable-field mt-2 h-90">
+                                                <textarea class="custom-textarea mt-2 w-100" readonly>';
+                                                    foreach($comment_feed as $comment) {
+                                                        echo $comment['username'] . ": " . $comment['comment'] . "&#13;&#10;";
+                                                    }
+                                                echo '</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -55,3 +55,13 @@ CREATE TABLE `fishnetdb`.`user_followers` (
     FOREIGN KEY (`follower_username`) REFERENCES `users`(`username`) ON UPDATE CASCADE,
     FOREIGN KEY (`followed_username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
+
+CREATE TABLE `fishnetdb`.`user_comments` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `post_id` INT NOT NULL,
+    `username` VARCHAR(30) NOT NULL,
+    `comment` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`post_id`) REFERENCES `users_posts`(`id`) ON UPDATE CASCADE,
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
+);

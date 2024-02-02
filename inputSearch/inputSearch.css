@@ -1,24 +1,3 @@
-/*First Row*/
-.custom-container {
-    background-image: url("../img/cool-background.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.container-fluid {
-    padding: 0%;
-}
-
-.row-name {
-    height: 11vh;
-    border: 2px outset lightblue;
-}
-
-.img-fluid {
-    height: 10vh;
-    margin: 0.5%;
-}
-
 /*Second Row*/
 .row-search {
     border: 2px outset lightblue;
@@ -50,22 +29,4 @@
     margin: 1vh;
     width: 5vh;
     object-fit: cover;
-}
-
-/*Bottom Row*/
-.row-bottom {
-    height: 7vh;
-}
-
-.fixed-bottom {
-    background-color: #f8f9fa;
-    padding: 10px;
-    box-shadow: 0px 0px 10px lightblue;
-}
-
-.fixed-bottom button {
-    color: white;
-    font-size: 16px;
-    margin-left: 5%;
-    margin-right: 5%;
 }

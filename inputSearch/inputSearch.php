@@ -17,6 +17,7 @@ if(login_check($dbh)) { ?>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="inputSearch.css">
+    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body class="custom-container">
 
@@ -36,7 +37,7 @@ if(login_check($dbh)) { ?>
     </div>
     
     <div class="row-search">
-        <div class="form d-flex col-12 mt-3">
+        <div class="form d-flex col-12 mt-2">
             <div class="input col-6 mt-1">
                 <label for="search"></label>
                 <input class="text mb-2 mt-2" type="text" name="search" id="search" placeholder="Search">
@@ -45,7 +46,7 @@ if(login_check($dbh)) { ?>
                 </div>
                 <div class="scrollable-field" id="search_result"></div>
             </div>
-            <div class="radio col-6 mt-1 ml-1">
+            <div class="radio col-6 mt-1">
                 <div class="searchRadio align-items-center">
                     <div class="pref mt-2">
                         <h3 class="h3" id="Preferences">Preferences:</h3>

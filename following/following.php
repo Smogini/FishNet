@@ -20,6 +20,7 @@ if(login_check($dbh)) {
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="following.css">
+    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body class="custom-container">
 
@@ -41,7 +42,7 @@ if(login_check($dbh)) {
     
     <div class="row-scroll">
         <div class="col-12">
-            <div class="scrollable-field">
+            <div class="custom-scrollable-field">
                     <?php
                     foreach ($following as $user) {
                         $profile_pic = $dbh->retrieveProfilePic($user);

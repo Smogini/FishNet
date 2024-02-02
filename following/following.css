@@ -1,34 +1,4 @@
-/*First Row*/
-.custom-container {
-    background-image: url("../img/cool-background.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.container-fluid {
-    padding: 0%;
-}
-
-.row-name {
-    height: 11vh;
-    border: 2px outset lightblue;
-}
-
-.img-fluid {
-    height: 10vh;
-    margin: 0.5%;
-}
-
 /*Second Row*/
-.row-scroll {
-    height: 82vh;
-}
-
-.scrollable-field {
-    height: 81vh;
-    overflow-y: auto;
-}
-
 .follower {
     border: 1px solid lightblue;
     border-radius: 8px;
@@ -42,22 +12,4 @@
 .profile-img {
     margin: 1vh;
     width: 10vh;
-}
-
-/*Bottom Row*/
-.row-bottom {
-    height: 7vh;
-}
-
-.fixed-bottom {
-    background-color: #f8f9fa;
-    padding: 10px;
-    box-shadow: 0px 0px 10px lightblue;
-}
-
-.fixed-bottom button {
-    color: white;
-    font-size: 16px;
-    margin-left: 5%;
-    margin-right: 5%;
 }

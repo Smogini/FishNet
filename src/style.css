@@ -1,0 +1,62 @@
+/*First Row*/
+body {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.custom-container {
+    background-image: url("../img/cool-background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container-fluid {
+    padding: 0%;
+}
+
+.row-name {
+    height: 11vh;
+    border: 2px outset lightblue;
+}
+
+.img-fluid {
+    height: 9vh;
+    margin: 0.5%;
+}
+
+/*Second Row*/
+.row-scroll {
+    border: 2px outset lightblue;
+    height: 82vh;
+}
+
+.custom-scrollable-field {
+    height: 81vh;
+    overflow-y: auto;
+}
+
+.col-12 {
+    padding: 0%;
+}
+
+.custom-post {
+    margin: 0.5%;
+    border: 2px outset lightblue;
+}
+
+/*Bottom Row*/
+.row-bottom {
+    height: 7vh;
+}
+
+.fixed-bottom {
+    border: 2px outset lightblue;
+    background-color: transparent;
+    padding: 10px;
+}
+
+.fixed-bottom button {
+    color: white;
+    font-size: 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+}

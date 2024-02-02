@@ -6,11 +6,13 @@ if (isset($_POST['action'])) {
 
     $dbh = new DatabaseHelper();
     sec_session_start();
+    $user = $_SESSION['username'];
+    $post_id = $_POST['post_id'];
 
     switch ($_POST['action']) {
         case 'liking':
 
-            $result = $dbh->isLiking($_SESSION['username'], $_POST['post_id']);
+            $result = $dbh->isLiking($user, $post_id);
             
             if ($result) {
                 echo "liking_success";
@@ -20,7 +22,7 @@ if (isset($_POST['action'])) {
             break;
         case 'addLike':
 
-            $result = $dbh->insertLike($_SESSION['username'], $_POST['post_id']);
+            $result = $dbh->insertLike($user, $post_id);
 
             if ($result) {
                 echo "like_added";
@@ -28,10 +30,27 @@ if (isset($_POST['action'])) {
             break;
         case 'removeLike':
 
-            $result = $dbh->removeLike($_SESSION['username'], $_POST['post_id']);
+            $result = $dbh->removeLike($user, $post_id);
 
             if ($result) {
                 echo "like_removed";
+            }
+            break;
+        case 'insertComment':
+            $comment = $_POST['comment'];
+
+            $result = $dbh->insertComment($user, $post_id, $comment);
+
+            if ($result) {
+                echo "comment_added";
+            }
+            break;
+        case 'showComments':
+
+            $result = $dbh->retrieveComments($post_id);
+
+            if ($result) {
+                echo "comments_retrieved";
             }
             break;
         default:

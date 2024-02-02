@@ -375,6 +375,48 @@ class DatabaseHelper {
         return false;
     }
 
+    public function insertComment($username, $post_id, $comment) {
+        $query = "INSERT INTO user_comments(post_id, username, comment) VALUES (?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("iss", $post_id, $username, $comment);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        $stmt->close();
+        return false;
+    }
+
+    public function retrieveComments($post_id) {
+        $query = "SELECT id, username, comment FROM user_comments WHERE post_id = ? ORDER BY id DESC";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($id, $username, $comment);
+        $result = array();
+        while ($stmt->fetch()) {
+            $post = array(
+                'username' => $username,
+                'comment' => $comment
+            );
+            $result[] = $post;
+        }
+        $stmt->close();
+
+        return $result;
+    }
+
     public function closeConnection() {
         if ($this->conn) {
             $this->conn->close();
