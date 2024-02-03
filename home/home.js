@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function checkNotifications() {
-    let badge = document.getElementById("badge").innerText;
+    let badge = document.getElementById("badge");
     let formData = new FormData();
     formData.append("action", "controlNotifications");
 
@@ -20,7 +20,7 @@ function checkNotifications() {
         contentType: false,
         success: function(response) {
             if (response > 0) {
-                badge.textContent = "response";
+                badge.textContent = response;
             }
         },
     });
