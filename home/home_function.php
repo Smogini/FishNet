@@ -7,20 +7,22 @@ if (isset($_POST['action'])) {
     $dbh = new DatabaseHelper();
     sec_session_start();
     $user = $_SESSION['username'];
-    $post_id = $_POST['post_id'];
-
+    
     switch ($_POST['action']) {
         case 'liking':
+            $post_id = $_POST['post_id'];
 
             $result = $dbh->isLiking($user, $post_id);
+            $count = $dbh->countLikes($post_id);
             
             if ($result) {
-                echo "liking_success";
+                echo "liking_success" . $count;
             } else {
-                echo "not_liking";
+                echo "not_liking" . $count;
             }
             break;
         case 'addLike':
+            $post_id = $_POST['post_id'];
 
             $result = $dbh->insertLike($user, $post_id);
 
@@ -29,6 +31,7 @@ if (isset($_POST['action'])) {
             }
             break;
         case 'removeLike':
+            $post_id = $_POST['post_id'];
 
             $result = $dbh->removeLike($user, $post_id);
 
@@ -37,21 +40,20 @@ if (isset($_POST['action'])) {
             }
             break;
         case 'insertComment':
+            $post_id = $_POST['post_id'];
             $comment = $_POST['comment'];
-
+            
             $result = $dbh->insertComment($user, $post_id, $comment);
-
             if ($result) {
                 echo "comment_added";
             }
+
             break;
-        case 'showComments':
+        case 'controlNotifications':
 
-            $result = $dbh->retrieveComments($post_id);
+            $result = $dbh->controlNotifications($user);
+            echo count($result);
 
-            if ($result) {
-                echo "comments_retrieved";
-            }
             break;
         default:
             break;

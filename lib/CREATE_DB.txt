@@ -65,3 +65,11 @@ CREATE TABLE `fishnetdb`.`user_comments` (
     FOREIGN KEY (`post_id`) REFERENCES `users_posts`(`id`) ON UPDATE CASCADE,
     FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
 );
+
+CREATE TABLE `fishnetdb`.`user_notifications` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(30) NOT NULL,
+    `notification_type` VARCHAR(15) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
+);

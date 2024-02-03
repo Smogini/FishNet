@@ -33,8 +33,9 @@ if(login_check($dbh)) {
                     <h2 id="nomeSocial">Following</h2>
                 </div>
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mr-3 notification">
                 <em class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></em>
+                <span class="badge"></span>
             </div>
         </div>
     </div>

@@ -19,4 +19,6 @@
     outline: none;
     border: 0 none;
     resize: none;
-}                                                             
+    scrollbar-color: #000000 transparent;
+    scrollbar-width: thin;
+}

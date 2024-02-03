@@ -20,8 +20,8 @@ if(login_check($dbh)) {
     <title>FishNet Home</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../src/style.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="../src/style.css">
 </head>
 <body class="custom-container">
 
@@ -34,8 +34,9 @@ if(login_check($dbh)) {
                     <h2 id="nomeSocial">FishNet</h2>
                 </div>
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mr-3 notification">
                 <em class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></em>
+                <span id="badge" class="badge"></span>
             </div>
         </div>
     </div>

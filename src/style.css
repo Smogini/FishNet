@@ -23,6 +23,17 @@ body {
     margin: 0.5%;
 }
 
+/*Notification*/
+.notification .badge {
+    position: absolute;
+    top: 0.9vh;
+    right: 0.9vh;
+    padding: 0.5vh 1vh;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
 /*Second Row*/
 .row-scroll {
     border: 2px outset lightblue;
@@ -32,6 +43,8 @@ body {
 .custom-scrollable-field {
     height: 81vh;
     overflow-y: auto;
+    scrollbar-color: #000000 transparent;
+    scrollbar-width: thin;
 }
 
 .col-12 {

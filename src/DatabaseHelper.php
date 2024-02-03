@@ -375,6 +375,27 @@ class DatabaseHelper {
         return false;
     }
 
+    public function countLikes($post_id) {
+        $query = "SELECT COUNT(*) FROM liked_posts WHERE post_id = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param("i", $post_id);
+        if ($stmt->execute()) {
+            $stmt->store_result();
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            $stmt->close();
+            return $count;
+        }
+        $stmt->close();
+        return 0;
+    }
+
     public function insertComment($username, $post_id, $comment) {
         $query = "INSERT INTO user_comments(post_id, username, comment) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
@@ -414,6 +435,29 @@ class DatabaseHelper {
         }
         $stmt->close();
 
+        return $result;
+    }
+
+    public function controlNotifications($username) {
+        $query = "SELECT username, notification_type FROM user_notifications WHERE username = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($username, $notification_type);
+        $result = array();
+        while ($stmt->fetch()) {
+            $notification = array(
+                'username' => $username,
+                'notification_type' => $notification_type
+            );
+            $result[] = $notification;
+        }
+        $stmt->close();
         return $result;
     }
 
