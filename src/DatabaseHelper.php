@@ -341,7 +341,7 @@ class DatabaseHelper {
 
     public function insertLike($current_user, $post_id) {
         $query1 = "INSERT INTO liked_posts(post_id, username) VALUES (?, ?)";
-        $query2 = "INSERT INTO user_notifications(username, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?)";
+        $query2 = "INSERT INTO user_notifications(username, username_sender, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?, ?)";
         $stmt1 = $this->conn->prepare($query1);
         $stmt2 = $this->conn->prepare($query2);
 
@@ -352,7 +352,7 @@ class DatabaseHelper {
 
         $type = "like";
         $stmt1->bind_param("ss", $post_id, $current_user);
-        $stmt2->bind_param("ss", $post_id, $type);
+        $stmt2->bind_param("iss", $post_id, $current_user, $type);
         if ($stmt1->execute() && $stmt2->execute()) {
             $stmt1->close();
             $stmt2->close();
@@ -404,7 +404,7 @@ class DatabaseHelper {
 
     public function insertComment($username, $post_id, $comment) {
         $query1 = "INSERT INTO user_comments(post_id, username, comment) VALUES (?, ?, ?)";
-        $query2 = "INSERT INTO user_notifications(username, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?)";
+        $query2 = "INSERT INTO user_notifications(username, username_sender, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?, ?)";
     
         $stmt1 = $this->conn->prepare($query1);
         $stmt2 = $this->conn->prepare($query2);
@@ -416,7 +416,7 @@ class DatabaseHelper {
     
         $type = "comment";
         $stmt1->bind_param("iss", $post_id, $username, $comment);
-        $stmt2->bind_param("ss", $post_id, $type);
+        $stmt2->bind_param("iss", $post_id, $username, $type);
         $result1 = $stmt1->execute();
         $result2 = $stmt2->execute();
         $stmt1->close();
@@ -428,7 +428,6 @@ class DatabaseHelper {
             return false;
         }
     }
-    
 
     public function retrieveComments($post_id) {
         $query = "SELECT id, username, comment FROM user_comments WHERE post_id = ? ORDER BY id DESC";
@@ -474,6 +473,34 @@ class DatabaseHelper {
             $result[] = $notification;
         }
         $stmt->close();
+        return $result;
+    }
+
+    public function retrieveNotifications($user) {
+        $query1 = "SELECT notification_type, username_sender FROM user_notifications WHERE username = ? ORDER BY id DESC";
+        $query2 = "DELETE FROM user_notifications WHERE username = ?";
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt2 = $this->conn->prepare($query2);
+        if (!$stmt1 || !$stmt2) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        $stmt1->bind_param("s", $user);
+        $stmt2->bind_param("s", $user);
+        $stmt1->execute();
+
+        $stmt1->store_result();
+        $stmt1->bind_result($type, $username_sender);
+        $result = array();
+        while ($stmt1->fetch()) {
+            $post = array(
+                'notification_type' => $type,
+                'username_sender' => $username_sender
+            );
+            $result[] = $post;
+        }
+        $stmt1->close();
+        $stmt2->execute();
         return $result;
     }
 

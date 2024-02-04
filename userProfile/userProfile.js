@@ -13,7 +13,6 @@ function follow() {
         contentType: false,
         success: function(response) {
             if (response === "follow_success") {
-                alert("New follow");
                 window.location.href = "../userProfile/userProfile.php?user_visited="  + user_visited;
             } else {
                 alert("Error following new person");
@@ -37,7 +36,6 @@ function removeFollow() {
         contentType: false,
         success: function(response) {
             if (response === "remove_success") {
-                alert("Remove follow");
                 window.location.href = "../userProfile/userProfile.php?user_visited="  + user_visited;
             } else {
                 alert("Error removing the follow");

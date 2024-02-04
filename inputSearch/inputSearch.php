@@ -94,6 +94,7 @@ if(login_check($dbh)) { ?>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="../src/notification.js"></script>
 <script src="inputSearch.js"></script>
 </body>
 </html>

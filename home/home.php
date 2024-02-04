@@ -35,8 +35,11 @@ if(login_check($dbh)) {
                 </div>
             </div>
             <div class="d-flex align-items-center mr-3 notification">
-                <em class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></em>
                 <span id="badge" class="badge"></span>
+                <div class="dropdown">
+                    <em class="bi bi-bell clickable dropbtn" onclick="apriPopupNotifiche()"></em>
+                    <div id="custom_dropdown" class="dropdown-content"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -115,6 +118,7 @@ if(login_check($dbh)) {
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="../src/notification.js"></script>
 <script src="home.js"></script>
 </body>
 </html>

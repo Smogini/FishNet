@@ -1,7 +1,3 @@
-function apriPopupNotifiche() {
-    alert("Funzione non ancora implementata")
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     checkNotifications();
     checkLikes();
@@ -14,7 +10,7 @@ function checkNotifications() {
 
     $.ajax({
         type: "POST",
-        url: "home_function.php",
+        url: "../home/home_function.php",
         data: formData,
         processData: false,
         contentType: false,

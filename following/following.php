@@ -96,6 +96,7 @@ if(login_check($dbh)) {
     </div>
 </div>
 
+<script src="../src/notification.js"></script>
 </body>
 </html>
 
