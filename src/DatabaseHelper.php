@@ -340,20 +340,26 @@ class DatabaseHelper {
     }
 
     public function insertLike($current_user, $post_id) {
-        $query = "INSERT INTO liked_posts(post_id, username) VALUES (?, ?)";
-        $stmt = $this->conn->prepare($query);
+        $query1 = "INSERT INTO liked_posts(post_id, username) VALUES (?, ?)";
+        $query2 = "INSERT INTO user_notifications(username, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?)";
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt2 = $this->conn->prepare($query2);
 
-        if (!$stmt) {
+        if (!$stmt1 || !$stmt2) {
             error_log("Error preparing the query");
             return false;
         }
 
-        $stmt->bind_param("ss", $post_id, $current_user);
-        if ($stmt->execute()) {
-            $stmt->close();
+        $type = "like";
+        $stmt1->bind_param("ss", $post_id, $current_user);
+        $stmt2->bind_param("ss", $post_id, $type);
+        if ($stmt1->execute() && $stmt2->execute()) {
+            $stmt1->close();
+            $stmt2->close();
             return true;
         }
-        $stmt->close();
+        $stmt1->close();
+        $stmt2->close();
         return false;
     }
 
@@ -397,22 +403,32 @@ class DatabaseHelper {
     }
 
     public function insertComment($username, $post_id, $comment) {
-        $query = "INSERT INTO user_comments(post_id, username, comment) VALUES (?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-
-        if (!$stmt) {
+        $query1 = "INSERT INTO user_comments(post_id, username, comment) VALUES (?, ?, ?)";
+        $query2 = "INSERT INTO user_notifications(username, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?)";
+    
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt2 = $this->conn->prepare($query2);
+    
+        if (!$stmt1 || !$stmt2) {
             error_log("Error preparing the query");
             return false;
         }
-
-        $stmt->bind_param("iss", $post_id, $username, $comment);
-        if ($stmt->execute()) {
-            $stmt->close();
+    
+        $type = "comment";
+        $stmt1->bind_param("iss", $post_id, $username, $comment);
+        $stmt2->bind_param("ss", $post_id, $type);
+        $result1 = $stmt1->execute();
+        $result2 = $stmt2->execute();
+        $stmt1->close();
+        $stmt2->close();
+    
+        if ($result1 && $result2) {
             return true;
+        } else {
+            return false;
         }
-        $stmt->close();
-        return false;
     }
+    
 
     public function retrieveComments($post_id) {
         $query = "SELECT id, username, comment FROM user_comments WHERE post_id = ? ORDER BY id DESC";
