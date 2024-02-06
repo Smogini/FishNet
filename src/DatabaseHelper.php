@@ -3,31 +3,50 @@
 class DatabaseHelper {
     private $conn;
 
-    public function __construct() {
-        $this->conn = new mysqli("localhost", "root", "", "fishnetdb");
-
-        if (!$this->conn) {
-            echo "Error connecting to the DB";
-            return;
+    public function __construct($db_name = "") {
+        $this->conn = new mysqli("localhost", "root", "", $db_name);
+    
+        if ($this->conn->connect_error) {
+            exit("Connection failed: " . $this->conn->connect_error);
         }
+    }
+
+    public function databaseExists($db_name) {
+        $result = $this->conn->query("SHOW DATABASES LIKE '$db_name'");
+        return $result->num_rows > 0;
+    }
+    
+    private function executePreparedQuery($query, $params) {
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+
+        $stmt->bind_param(...$params);
+        $success = $stmt->execute();
+        $stmt->close();
+
+        if (!$success) {
+            error_log("Error executing query: " . $this->conn->error);
+            return false;
+        }
+
+        return true;
     }
 
     public function insertUser($first, $last, $username, $pass, $addr, $dob) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         $pass = hash('sha512', $pass.$random_salt);
         $query = "INSERT INTO users(first, last, username, password, salt, address, dob) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        if ($stmt) {
-            $stmt->bind_param("sssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob);
-            $stmt->execute();
-            $stmt->close();
-            return true;
-        }
-        return false;
+        $params = ["sssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob];
+
+        return $this->executePreparedQuery($query, $params);
     }
 
     public function retrieveUsers($username) {
-        $query = "SELECT * FROM users WHERE username LIKE ?";
+        $query = "SELECT first, last, username, address, dob FROM users WHERE username LIKE ?";
         $stmt = $this->conn->prepare($query);
     
         if (!$stmt) {
@@ -53,7 +72,7 @@ class DatabaseHelper {
             return null;
         }
     
-        $stmt->bind_result($first, $last, $resultUsername, $pass, $salt, $addr, $dob);
+        $stmt->bind_result($first, $last, $resultUsername, $addr, $dob);
     
         $result = array();
         while ($stmt->fetch()) {
@@ -61,8 +80,6 @@ class DatabaseHelper {
                 'firstName' => $first,
                 'lastName' => $last,
                 'username' => $resultUsername,
-                'password' => $pass,
-                'salt' => $salt,
                 'address' => $addr,
                 'dateOfBirth' => $dob
             );
@@ -73,29 +90,15 @@ class DatabaseHelper {
         return $result;
     }
     
-    
     public function editUser($first, $last, $username, $pass, $addr, $dob, $active_username) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         $pass = hash('sha512', $pass.$random_salt);
+        
         $query = "UPDATE users SET first = ?, last = ?, username = ?, password = ?, salt = ?, address = ?, dob = ? WHERE username = ?";
-        $stmt = $this->conn->prepare($query);
-    
-        if (!$stmt) {
-            error_log("Errore durante la preparazione dello statement: " . $this->conn->error);
-            return false;
-        }
-    
-        $stmt->bind_param("ssssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob, $active_username);
-        $success = $stmt->execute();
-        $stmt->close();
-    
-        if (!$success) {
-            error_log("Errore durante l'esecuzione della query: " . $this->conn->error);
-            return false;
-        }
-        return true;
+        $params = ["ssssssss", $first, $last, $username, $pass, $random_salt, $addr, $dob, $active_username];
+
+        return $this->executePreparedQuery($query, $params);
     }
-    
 
     public function dropUser($username) {
         $query = "DELETE FROM users WHERE username = ?";
@@ -105,20 +108,66 @@ class DatabaseHelper {
         $stmt->close();
     }
 
-    public function insertImage($username, $name, $description, $image) {
-        $image = base64_encode(file_get_contents(addslashes($image)));
-        $query = "INSERT INTO users_profile_pics(`username`, `name`, `description`, `image`) VALUES (?, ?, ?, ?)";
+    public function retrieveFish($fish_type) {
+        $query = "  SELECT P.username, P.image, P.description, P.location, PI.image
+                    FROM users_posts as P, users as U, users_profile_pics as PI
+                    WHERE U.username = PI.username
+                    AND P.username = U.username
+                    AND P.fish_type = ?";
         $stmt = $this->conn->prepare($query);
-        
+    
         if (!$stmt) {
             error_log("Error preparing the query");
             return false;
         }
 
-        $stmt->bind_param("ssss", $username, $name, $description, $image);
+        $stmt->bind_param("s", $fish_type);
         $stmt->execute();
+    
+        if ($stmt->error) {
+            error_log("Error executing query: " . $stmt->error);
+            return false;
+        }
+    
+        $stmt->store_result();
+    
+        if ($stmt->num_rows === 0) {
+            error_log("Fish not found: " . $fish_type);
+            $stmt->close();
+            return null;
+        }
+    
+        $stmt->bind_result($username, $image, $description, $location, $profile_pic);
+        $result = array();
+        while ($stmt->fetch()) {
+            $post = array(
+                'username' => $username,
+                'description' => $description,
+                'image' => $image,
+                'location' => $location,
+                'profile_pic' => $profile_pic
+            );
+            $result[] = $post;
+        }
+
         $stmt->close();
-        return true;
+        return $result;
+    }
+
+    public function insertProfilePic($username, $name, $description, $image) {
+        $image = base64_encode(file_get_contents(addslashes($image)));
+        $query = "INSERT INTO users_profile_pics(username, name, description, image) VALUES (?, ?, ?, ?)";
+        $params = ["ssss", $username, $name, $description, $image];
+
+        return $this->executePreparedQuery($query, $params);
+    }
+
+    public function editProfilePic($username, $name, $description, $image) {
+        $image = base64_encode(file_get_contents(addslashes($image)));
+        $query = "UPDATE users_profile_pics SET name = ?, description = ?, image = ? WHERE username = ?";
+        $params = ["ssss", $name, $description, $image, $username];
+
+        return $this->executePreparedQuery($query, $params);
     }
 
     public function retrieveProfilePic($username) {
@@ -148,25 +197,17 @@ class DatabaseHelper {
         return null;
     }
 
-    public function insertPost($username, $name, $description, $image, $location) {
+    public function insertPost($username, $name, $description, $image, $location, $fish_type) {
         $image = base64_encode(file_get_contents(addslashes($image)));
-        $query = "INSERT INTO users_posts(username, name, description, image, location) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
+        $query = "INSERT INTO users_posts(username, name, description, image, location, fish_type) VALUES (?, ?, ?, ?, ?, ?)";
+        $params = ["ssssss", $username, $name, $description, $image, $location, $fish_type];
 
-        if (!$stmt) {
-            error_log("Error preparing the query");
-            return null;
-        }
-
-        $stmt->bind_param("sssss", $username, $name, $description, $image, $location);
-        $stmt->execute();
-        $stmt->close();
-        return true;
+        return $this->executePreparedQuery($query, $params);
     }
 
     public function retrievePost($username) {
         $result = array();
-        $query = "SELECT name, description, image, location FROM users_posts WHERE username = ?";
+        $query = "SELECT id, name, description, image, location, fish_type FROM users_posts WHERE username = ?";
         $stmt = $this->conn->prepare($query);
     
         if (!$stmt) {
@@ -177,14 +218,16 @@ class DatabaseHelper {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($name, $description, $image, $location);
+        $stmt->bind_result($post_id, $name, $description, $image, $location, $fish_type);
 
         while ($stmt->fetch()) {
             $post = array(
+                'post_id' => $post_id,
                 'name' => $name,
                 'description' => $description,
                 'image' => $image,
-                'location' => $location
+                'location' => $location,
+                'fish_type' => $fish_type
             );
             $result[] = $post;
         }
@@ -192,9 +235,16 @@ class DatabaseHelper {
         return $result;
     }
 
+    public function deletePost($post_id) {
+        $query = "DELETE FROM users_posts WHERE id = ?";
+        $params = ["i", $post_id];
+
+        return $this->executePreparedQuery($query, $params);
+    }
+
     public function retrieveHomeFeed($username) {
         $result = array();
-        $query = "  SELECT P.name, P.description, P.image, P.location, PF.image, PF.username, P.id
+        $query = "  SELECT P.name, P.description, P.image, P.location, P.fish_type, PF.image, PF.username, P.id
                     FROM users_posts AS P, user_followers AS F, users_profile_pics AS PF
                     WHERE P.username = F.followed_username
                     AND PF.username = F.followed_username
@@ -210,7 +260,7 @@ class DatabaseHelper {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($name, $description, $image, $location, $profile_pic, $username, $post_id);
+        $stmt->bind_result($name, $description, $image, $location, $fish_type, $profile_pic, $username, $post_id);
 
         while ($stmt->fetch()) {
             $post = array(
@@ -218,6 +268,7 @@ class DatabaseHelper {
                 'description' => $description,
                 'image' => $image,
                 'location' => $location,
+                'fish_type' => $fish_type,
                 'profile_pic' => $profile_pic,
                 'username' => $username,
                 'post_id' => $post_id
@@ -230,33 +281,21 @@ class DatabaseHelper {
     }
 
     public function insertFollower($current_user, $followed_username) {
-        $query = "INSERT INTO user_followers VALUES (?, ?)";
-        $stmt = $this->conn->prepare($query);
+        $query1 = "INSERT INTO user_followers VALUES (?, ?)";
+        $params1 = ["ss", $current_user, $followed_username];
 
-        if (!$stmt) {
-            error_log("Error preparing the query");
-            return false;
-        }
+        $query2 = "INSERT INTO user_notifications(username, username_sender, notification_type) VALUES (?, ?, ?)";
+        $type = "follow";
+        $params2 = ["sss", $followed_username, $current_user, $type];
 
-        $stmt->bind_param("ss", $current_user, $followed_username);
-        $stmt->execute();
-        $stmt->close();
-        return true;
+        return $this->executePreparedQuery($query1, $params1) && $this->executePreparedQuery($query2, $params2);
     }
 
     public function removeFollower($current_user, $followed_username) {
         $query = "DELETE FROM user_followers WHERE follower_username = ? AND followed_username = ?";
-        $stmt = $this->conn->prepare($query);
+        $params = ["ss", $current_user, $followed_username];
 
-        if (!$stmt) {
-            error_log("Error preparing the query");
-            return false;
-        }
-
-        $stmt->bind_param("ss", $current_user, $followed_username);
-        $stmt->execute();
-        $stmt->close();
-        return true;
+        return $this->executePreparedQuery($query, $params);
     }
 
     public function retrieveFollowings($current_user) {
@@ -341,44 +380,20 @@ class DatabaseHelper {
 
     public function insertLike($current_user, $post_id) {
         $query1 = "INSERT INTO liked_posts(post_id, username) VALUES (?, ?)";
+        $params1 = ["ss", $post_id, $current_user];
+
         $query2 = "INSERT INTO user_notifications(username, username_sender, notification_type) VALUES ((SELECT username FROM users_posts WHERE id = ?), ?, ?)";
-        $stmt1 = $this->conn->prepare($query1);
-        $stmt2 = $this->conn->prepare($query2);
-
-        if (!$stmt1 || !$stmt2) {
-            error_log("Error preparing the query");
-            return false;
-        }
-
         $type = "like";
-        $stmt1->bind_param("ss", $post_id, $current_user);
-        $stmt2->bind_param("iss", $post_id, $current_user, $type);
-        if ($stmt1->execute() && $stmt2->execute()) {
-            $stmt1->close();
-            $stmt2->close();
-            return true;
-        }
-        $stmt1->close();
-        $stmt2->close();
-        return false;
+        $params2 = ["iss", $post_id, $current_user, $type];
+
+        return $this->executePreparedQuery($query1, $params1) && $this->executePreparedQuery($query2, $params2);
     }
 
     public function removeLike($current_user, $post_id) {
         $query = "DELETE FROM liked_posts WHERE post_id = ? AND username = ?";
-        $stmt = $this->conn->prepare($query);
+        $params = ["is", $post_id, $current_user];
 
-        if (!$stmt) {
-            error_log("Error preparing the query");
-            return false;
-        }
-
-        $stmt->bind_param("ss", $post_id, $current_user);
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true;
-        }
-        $stmt->close();
-        return false;
+        return $this->executePreparedQuery($query, $params);
     }
 
     public function countLikes($post_id) {
@@ -501,6 +516,7 @@ class DatabaseHelper {
         }
         $stmt1->close();
         $stmt2->execute();
+        $stmt2->close();
         return $result;
     }
 

@@ -1,26 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    checkNotifications();
     checkLikes();
 });
-
-function checkNotifications() {
-    let badge = document.getElementById("badge");
-    let formData = new FormData();
-    formData.append("action", "controlNotifications");
-
-    $.ajax({
-        type: "POST",
-        url: "../home/home_function.php",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response > 0) {
-                badge.textContent = response;
-            }
-        },
-    });
-}
 
 function checkLikes() {
     let likeButtons = document.querySelectorAll('.custom-like');
@@ -33,7 +13,7 @@ function checkLikes() {
 
         $.ajax({
             type: "POST",
-            url: "home_function.php",
+            url: "../src/likes_function.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -60,7 +40,7 @@ function addLike(post_id) {
 
     $.ajax({
         type: "POST",
-        url: "home_function.php",
+        url: "../src/likes_function.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -88,7 +68,7 @@ function removeLike(post_id) {
 
     $.ajax({
         type: "POST",
-        url: "home_function.php",
+        url: "../src/likes_function.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -121,7 +101,7 @@ function addComment(post_id) {
 
     $.ajax({
         type: "POST",
-        url: "home_function.php",
+        url: "../src/likes_function.php",
         data: formData,
         processData: false,
         contentType: false,

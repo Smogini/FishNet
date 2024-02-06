@@ -3,9 +3,10 @@
 if (isset($_POST['action'])) {
     include_once '../src/DatabaseHelper.php';
     include_once '../lib/functions.php';
-    
+    include_once '../src/initDB.php';
+
+    $dbh = new DatabaseHelper(DB_NAME);
     sec_session_start();
-    $dbh = new DatabaseHelper();
     
     switch($_POST['action']) {
         case 'login':
@@ -20,12 +21,8 @@ if (isset($_POST['action'])) {
             }
             break;
         
-            default:
-                echo "Azione non valida.";
-                break;
+        default:
+            break;
     }
     $dbh->closeConnection();
-
 }
-
-?>

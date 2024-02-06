@@ -90,6 +90,23 @@ body {
     border: 2px outset lightblue;
 }
 
+.post-img {
+    margin: 1vh;
+    height: 61vh;
+    width: auto;
+}
+
+.custom-textarea {
+    height: 41vh;
+    width: inherit;
+    background: transparent;
+    outline: none;
+    border: 0 none;
+    resize: none;
+    scrollbar-color: #000000 transparent;
+    scrollbar-width: thin;
+}
+
 /*Bottom Row*/
 .row-bottom {
     height: 7vh;

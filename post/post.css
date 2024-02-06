@@ -1,28 +1,13 @@
-/*First Row*/
-.row-name {
-    height: 11vh;
-    border: 2px outset lightblue;
-}
-
-.img-fluid {
-    width: 10vh;
-    margin: 0.5%;
-}
-
 /*Form*/
-.row-form {
+form {
+    display: flex;
+    flex-direction: column;
     height: 82vh;
     border: 2px outset lightblue;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
 #map {
-    height: 35vh;
-    margin-bottom: 2%;
+    height: 40%;
 }
 
 /*Bottom Row*/

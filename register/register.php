@@ -3,8 +3,9 @@
 if (isset($_POST['action'])) {
     include_once '../src/DatabaseHelper.php';
     include_once '../lib/functions.php';
+    include_once '../src/initDB.php';
 
-    $dbHelper = new DatabaseHelper();
+    $dbHelper = new DatabaseHelper(DB_NAME);
 
     switch ($_POST['action']) {
         case 'insertUser':
@@ -18,21 +19,20 @@ if (isset($_POST['action'])) {
             $name = $_FILES['profile_pic']['name'];
 
             $user_result = $dbHelper->insertUser($firstName, $lastName, $username, $password, $address, $dob);
-            $image_result = $dbHelper->insertImage($username, $name, $username . "_profile_pic", $image);
+            $image_result = $dbHelper->insertProfilePic($username, $name, $username . "_profile_pic", $image);
             
             if ($user_result && $image_result) {
                 echo "register_success";
             }
-            $dbHelper->closeConnection();
             break;
-
+            
         case 'dropUser':
             $username = $_POST['username'];
             $dbHelper->dropUser($username);
             break;
-
+            
         default:
-            echo "Azione non valida.";
             break;
     }
+    $dbHelper->closeConnection();
 }

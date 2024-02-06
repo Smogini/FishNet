@@ -1,24 +1,7 @@
 /*Second Row*/
 .profile-img {
     margin: 1vh;
-    width: 20vh;
+    width: 10%;
     height: auto;
     object-fit: cover;
-}
-
-.post-img {
-    margin: 1vh;
-    height: 61vh;
-    width: auto;
-}
-
-.custom-textarea {
-    height: 41vh;
-    width: inherit;
-    background: transparent;
-    outline: none;
-    border: 0 none;
-    resize: none;
-    scrollbar-color: #000000 transparent;
-    scrollbar-width: thin;
 }

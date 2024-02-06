@@ -28,12 +28,14 @@ function post() {
     let image = document.getElementById("fishImage").files[0];
     let description = document.getElementById("description").value; 
     let location = document.getElementById("location").value;
+    let fish_type = document.getElementById("fish_type").value;
 
     let formData = new FormData();
     formData.append("action", "insertPost");
     formData.append("user_post", image);
     formData.append("description", description);
     formData.append("location", location);
+    formData.append("fish_type", fish_type);
 
     $.ajax({
         type: "POST",

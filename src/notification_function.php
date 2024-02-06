@@ -3,8 +3,9 @@
 if (isset($_POST['action'])) {
     include_once "../src/DatabaseHelper.php";
     include_once "../lib/functions.php";
+    include_once "../src/initDB.php";
 
-    $dbh = new DatabaseHelper();
+    $dbh = new DatabaseHelper(DB_NAME);
     sec_session_start();
     $user = $_SESSION['username'];
     
@@ -27,4 +28,5 @@ if (isset($_POST['action'])) {
         default:
             break;
     }
+    $dbh->closeConnection();
 }

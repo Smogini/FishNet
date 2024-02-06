@@ -21,6 +21,9 @@ function search() {
             if (response === "user_not_found") {
                 alert("User not found");
                 return;
+            } else if (response === "fish_not_found") {
+                alert("Fish not found");
+                return;
             }
             $("#search_result").html(response);
         },

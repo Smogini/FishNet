@@ -2,13 +2,13 @@
 
 include_once '../src/DatabaseHelper.php';
 include_once '../lib/functions.php';
+include_once '../src/initDB.php';
 
-$dbh = new DatabaseHelper();
+$dbh = new DatabaseHelper(DB_NAME);
 
 sec_session_start();
 if(login_check($dbh)) { 
     $current_user = $_SESSION['username'];
-    $following = $dbh->retrieveFollowings($current_user);
     $home_feed = $dbh->retrieveHomeFeed($current_user);
 ?>  
 
@@ -17,7 +17,7 @@ if(login_check($dbh)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet Home</title>
+    <title>Home</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="home.css">
@@ -50,10 +50,9 @@ if(login_check($dbh)) {
             <div id="scrollable" class="custom-scrollable-field">
                 <div>
                     <?php
-                    if (count($home_feed) > 0) {
                         foreach ($home_feed as $post) {
                             echo
-                            '<form method="get" action="../userProfile/userProfile.php">
+                            '<form method="post" action="../userProfile/userProfile.php">
                                 <div class="custom-post">
                                     <div class="d-flex align-items-center mb-3">
                                         <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $post['profile_pic'] . '">
@@ -84,9 +83,6 @@ if(login_check($dbh)) {
                                 </div>
                             </form>';
                         }
-                    } else {
-
-                    }
                     ?>
                 </div>
             </div>
@@ -119,11 +115,12 @@ if(login_check($dbh)) {
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="../src/notification.js"></script>
-<script src="home.js"></script>
+<script src="../src/likes.js"></script>
 </body>
 </html>
 
-<?php 
+<?php
+$dbh->closeConnection();
 } else { 
     echo 'You are not authorized to access this page, please login. <br/>';
 }?>

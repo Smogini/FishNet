@@ -2,8 +2,9 @@
 
 include_once '../src/DatabaseHelper.php';
 include_once '../lib/functions.php';
+include_once '../src/initDB.php';
 
-$dbh = new DatabaseHelper();
+$dbh = new DatabaseHelper(DB_NAME);
 
 sec_session_start();
 if(login_check($dbh)) { 
@@ -16,10 +17,11 @@ if(login_check($dbh)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet Profile</title>
+    <?php
+        echo '<title>' . $user_visited . '\'s profile</title>';
+    ?> 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="userProfile.css">
     <link rel="stylesheet" href="../src/style.css">
 </head>
 <body class="custom-container">
@@ -43,20 +45,30 @@ if(login_check($dbh)) {
 
     <div class="row-scroll">
         <div class="col-12">
-            <div class="custom-scrollable-field">
+            <div id="scrollable" class="custom-scrollable-field">
                 <?php
                     $result_post = $dbh->retrievePost($user_visited);
                     foreach ($result_post as $post) {
                         echo 
-                            '<div class="post">
-                                <div class="d-flex align-items-center">
-                                    <img class="post-img mr-3" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
-                                    <div class="post-description">
-                                        <p>' . $post['description'] . '</p>
-                                        <p>' . $post['location'] . '</p>
+                        '<div class="custom-post">
+                            <div class="d-flex">
+                                <img class="post-img mr-3 w-50" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
+                                <div class="w-50">
+                                    <p>' . $post['description'] . '</p>
+                                    <p>' . $post['location'] . '</p>
+                                    <button type="button" name="likeButton" data-post-id="' . $post['post_id'] . '" class="custom-like btn btn-primary ml-auto mr-2"></button>
+                                    <button type="button" name="commentButton" data-post-id="' . $post['post_id'] . '" class="custom-comment btn btn-primary ml-auto mr-2" onclick="addComment(' . $post['post_id'] . ')"><em class="bi bi-chat-dots-fill"></em></button>';
+                                    $comment_feed = $dbh->retrieveComments($post['post_id']);
+                                    echo '<div class="scrollable-field mt-2 h-90">
+                                        <textarea class="custom-textarea mt-2 w-100" readonly>';
+                                        foreach($comment_feed as $comment) {
+                                            echo $comment['username'] . ": " . $comment['comment'] . "&#13;&#10;";
+                                        }
+                                    echo '</textarea>
                                     </div>
                                 </div>
-                            </div>';
+                            </div>
+                        </div>';
                     }
                 ?>
             </div>
@@ -88,11 +100,13 @@ if(login_check($dbh)) {
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="userProfile.js"></script>
+<script src="../src/follow.js"></script>
+<script src="../src/likes.js"></script>
 </body>
 </html>
 
 <?php 
+$dbh->closeConnection();
 } else { 
     echo 'You are not authorized to access this page, please login. <br/>';
 }?>

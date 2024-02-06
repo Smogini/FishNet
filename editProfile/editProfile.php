@@ -2,8 +2,9 @@
 
 include_once '../src/DatabaseHelper.php';
 include_once '../lib/functions.php';
+include_once "../src/initDB.php";
 
-$dbh = new DatabaseHelper();
+$dbh = new DatabaseHelper(DB_NAME);
 
 sec_session_start();
 if(login_check($dbh)) { ?>
@@ -13,7 +14,7 @@ if(login_check($dbh)) { ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet editProfile</title>
+    <title>Edit profile</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -26,7 +27,7 @@ if(login_check($dbh)) { ?>
                     <h3 class="text-center">Edit your Profile</h3>
                 </div>
                 <div class="card-body">
-                    <form id="registerForm">
+                    <form id="registerForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="firstName">First Name:</label>
                             <input type="text" id="firstName" class="form-control" required>
@@ -51,7 +52,14 @@ if(login_check($dbh)) { ?>
                             <label for="dob">Date of Birth:</label>
                             <input type="date" id="dob" class="form-control" required>
                         </div>
-                        <button type="button" class="btn btn-primary btn-block" onclick="editProfile()">Confirm</button>
+                        <div class="form-group">
+                            <label for="profileImage">Select your profile image:</label><br>
+                            <input type="file" name="profileImage" id="profileImage" required>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-primary btn-block mr-5" onclick="editProfile()">Confirm</button>
+                            <button type="button" class="btn btn-danger btn-block m-0" onclick="cancel()">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -65,6 +73,7 @@ if(login_check($dbh)) { ?>
 </html>
 
 <?php
+$dbh->closeConnection();
 } else {
     echo 'You are not authorized to access this page, please login. <br/>';
 }?>

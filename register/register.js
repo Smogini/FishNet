@@ -6,10 +6,6 @@ function register() {
     let address = document.getElementById("address").value;
     let dateOfBirth = document.getElementById("dob").value;
     let prof_pic = document.getElementById("profileImage").files[0];
-    /**if(prof_pic.length == 0) {
-        alert("Insert profile image");
-        return;
-    }*/
 
     let formData = new FormData();
     formData.append("action", "insertUser");
@@ -29,7 +25,7 @@ function register() {
         contentType: false,
         success: function(response) {
             if (response === "register_success") {
-                window.location.href = "../login/login.html";
+                window.location.href = "../login/login.php";
             } else {
                 dropUser(username);
                 alert("Error during registration");

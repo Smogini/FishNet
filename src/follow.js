@@ -7,7 +7,7 @@ function follow() {
 
     $.ajax({
         type: "POST",
-        url: "follow_function.php",
+        url: "../src/follow_function.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -30,7 +30,7 @@ function removeFollow() {
 
     $.ajax({
         type: "POST",
-        url: "follow_function.php",
+        url: "../src/follow_function.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     $.ajax({
         type: "POST",
-        url: "follow_function.php",
+        url: "../src/follow_function.php",
         data: formData,
         processData: false,
         contentType: false,

@@ -1,3 +1,31 @@
+document.addEventListener('DOMContentLoaded', function() {
+    checkNotifications();
+});
+
+function checkNotifications() {
+    let badge = document.getElementById("badge");
+
+    if (!badge) {
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("action", "controlNotifications");
+
+    $.ajax({
+        type: "POST",
+        url: "../src/likes_function.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response > 0) {
+                badge.textContent = response;
+            }
+        },
+    });
+}
+
 function apriPopupNotifiche() {
     document.getElementById("custom_dropdown").classList.toggle("show");
     let formData = new FormData();
@@ -29,6 +57,9 @@ function apriPopupNotifiche() {
                         } else if (noti.includes("comment")) {
                             noti = noti.replace("comment", "");
                             paragraph.textContent = noti + " ha scritto un commento";
+                        } else if (noti.includes("follow")) {
+                            noti = noti.replace("follow", "");
+                            paragraph.textContent = noti + " ha iniziato a seguirti";
                         }
                         dropdown.appendChild(paragraph);
                     }

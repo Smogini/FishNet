@@ -2,8 +2,9 @@
 
 include_once '../src/DatabaseHelper.php';
 include_once '../lib/functions.php';
+include_once '../src/initDB.php';
 
-$dbh = new DatabaseHelper();
+$dbh = new DatabaseHelper(DB_NAME);
 
 sec_session_start();
 if(login_check($dbh)) { 
@@ -16,7 +17,7 @@ if(login_check($dbh)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishNet Following</title>
+    <title>Following</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="following.css">
@@ -34,8 +35,11 @@ if(login_check($dbh)) {
                 </div>
             </div>
             <div class="d-flex align-items-center mr-3 notification">
-                <em class="bi bi-bell clickable" onclick="apriPopupNotifiche()"></em>
-                <span class="badge"></span>
+                <span id="badge" class="badge"></span>
+                <div class="dropdown">
+                    <em class="bi bi-bell clickable dropbtn" onclick="apriPopupNotifiche()"></em>
+                    <div id="custom_dropdown" class="dropdown-content"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -96,11 +100,13 @@ if(login_check($dbh)) {
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="../src/notification.js"></script>
 </body>
 </html>
 
 <?php 
+$dbh->closeConnection();
 } else { 
     echo 'You are not authorized to access this page, please login. <br/>';
 }?>
