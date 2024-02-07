@@ -44,7 +44,7 @@ if(login_check($dbh)) { ?>
     <div class="row-search">
         <div class="form d-flex col-12 mt-2">
             <div class="input col-6 mt-1">
-                <label for="search"></label>
+                <label for="search">Search:</label>
                 <input class="text mb-2 mt-2" type="text" name="search" id="search" placeholder="Search">
                 <div class="searchButton mb-2">
                     <button type="button" class="btn btn-primary" onclick="search()">Search <em class="bi bi-search ml-2"></em></button>
