@@ -17,16 +17,30 @@
 .scrollable-field {
     height: 57vh;
     overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #000000 transparent;
+    scrollbar-width: thin;
 }
 
 .custom-result {
     border: 2px outset lightblue;
-    height: 10vh;
+    height: 20%;
     margin-top: 2%;
+}
+
+.custom-result .btn {
+    padding: 1.5%;
 }
 
 .profile-img {
     margin: 1vh;
-    width: 5vh;
+    width: 10%;
     object-fit: cover;
 }
+
+.custom-post-img {
+    margin: 1%;
+    width: 30%;
+    object-fit: cover;
+}
+

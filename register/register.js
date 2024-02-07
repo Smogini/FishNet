@@ -7,6 +7,11 @@ function register() {
     let dateOfBirth = document.getElementById("dob").value;
     let prof_pic = document.getElementById("profileImage").files[0];
 
+    if (!checkDate(dateOfBirth)) {
+        alert("Please insert a valid date");
+        return;
+    }
+
     let formData = new FormData();
     formData.append("action", "insertUser");
     formData.append("firstName", firstName);
@@ -32,6 +37,19 @@ function register() {
             }
         },
     });
+}
+
+function checkDate(date) {
+    var currentDate = new Date();
+
+    var parts = date.split('-');
+    var userDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    if (userDate > currentDate) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function dropUser(username) {

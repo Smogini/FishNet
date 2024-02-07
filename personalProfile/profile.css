@@ -1,0 +1,9 @@
+.w-50 {
+    position: relative;
+}
+
+.w-50 .btn-danger {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

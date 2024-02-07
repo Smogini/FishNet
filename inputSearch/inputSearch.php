@@ -17,8 +17,8 @@ if(login_check($dbh)) { ?>
     <title>Search</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="inputSearch.css">
     <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="inputSearch.css">
 </head>
 <body class="custom-container">
 
@@ -43,29 +43,29 @@ if(login_check($dbh)) { ?>
     
     <div class="row-search">
         <div class="form d-flex col-12 mt-2">
-            <div class="input col-6 mt-1">
-                <label for="search">Search:</label>
+            <div class="input col-8 mt-1 pr-0">
+                <label for="search" class="visually-hidden">Search:</label>
                 <input class="text mb-2 mt-2" type="text" name="search" id="search" placeholder="Search">
-                <div class="searchButton mb-2">
+                <div>
                     <button type="button" class="btn btn-primary" onclick="search()">Search <em class="bi bi-search ml-2"></em></button>
                 </div>
-                <div class="scrollable-field" id="search_result"></div>
+                <div class="scrollable-field mt-2" id="search_result"></div>
             </div>
-            <div class="radio col-6 mt-1">
+            <div class="radio col-4 mt-1">
                 <div class="searchRadio align-items-center">
                     <div class="pref mt-2">
                         <h3 class="h3" id="Preferences">Preferences:</h3>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="account" name="searchRadio" value="Account">
+                        <input type="radio" id="account" name="searchRadio" value="Account" onclick="resetPlaceholder()">
                         <label for="account">Account</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="fish" name="searchRadio" value="Fish">
+                        <input type="radio" id="fish" name="searchRadio" value="Fish" onclick="resetPlaceholder()">
                         <label for="fish">Fish</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="location" name="searchRadio" value="Location">
+                        <input type="radio" id="location" name="searchRadio" value="Location" onclick="changePlaceholder()">
                         <label for="location">Location</label>
                     </div>
                 </div>

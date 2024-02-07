@@ -46,7 +46,11 @@ class DatabaseHelper {
     }
 
     public function retrieveUsers($username) {
-        $query = "SELECT first, last, username, address, dob FROM users WHERE username LIKE ?";
+        $query = "SELECT U.first, U.last, U.username, U.address, U.dob, PI.image
+                  FROM users AS U, users_profile_pics AS PI
+                  WHERE U.username = PI.username
+                  AND U.username
+                  LIKE ?";
         $stmt = $this->conn->prepare($query);
     
         if (!$stmt) {
@@ -72,7 +76,7 @@ class DatabaseHelper {
             return null;
         }
     
-        $stmt->bind_result($first, $last, $resultUsername, $addr, $dob);
+        $stmt->bind_result($first, $last, $resultUsername, $addr, $dob, $profile_pic);
     
         $result = array();
         while ($stmt->fetch()) {
@@ -81,7 +85,8 @@ class DatabaseHelper {
                 'lastName' => $last,
                 'username' => $resultUsername,
                 'address' => $addr,
-                'dateOfBirth' => $dob
+                'dateOfBirth' => $dob,
+                'profile_pic' => $profile_pic
             );
             $result[] = $post;
         }
@@ -133,6 +138,57 @@ class DatabaseHelper {
     
         if ($stmt->num_rows === 0) {
             error_log("Fish not found: " . $fish_type);
+            $stmt->close();
+            return null;
+        }
+    
+        $stmt->bind_result($username, $image, $description, $location, $profile_pic);
+        $result = array();
+        while ($stmt->fetch()) {
+            $post = array(
+                'username' => $username,
+                'description' => $description,
+                'image' => $image,
+                'location' => $location,
+                'profile_pic' => $profile_pic
+            );
+            $result[] = $post;
+        }
+
+        $stmt->close();
+        return $result;
+    }
+
+    public function retrieveLocation($location) {
+        $query = "  SELECT P.username, P.image, P.description, P.location, PI.image
+                    FROM users_posts as P, users as U, users_profile_pics as PI
+                    WHERE U.username = PI.username
+                    AND P.username = U.username
+                    AND P.location LIKE ?";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error preparing the query");
+            return false;
+        }
+        
+        $location = explode(",", $location);
+        $latitude = $location[0];
+        $longitude = $location[1];
+        $searchLocation = $latitude . '%,' . $longitude . '%';
+
+        $stmt->bind_param("s", $searchLocation);
+        $stmt->execute();
+
+        if ($stmt->error) {
+            error_log("Error executing query: " . $stmt->error);
+            return false;
+        }
+    
+        $stmt->store_result();
+    
+        if ($stmt->num_rows === 0) {
+            error_log("Location not found: " . $latitude . ", " . $longitude);
             $stmt->close();
             return null;
         }

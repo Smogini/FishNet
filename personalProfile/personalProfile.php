@@ -22,6 +22,7 @@ if(login_check($dbh)) {
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body class="custom-container">
 
@@ -39,7 +40,7 @@ if(login_check($dbh)) {
                 <p id="dataCreazione"></p>
             </div>
             <a href="../editProfile/editProfile.php" class="btn btn-primary ml-auto mr-2">Edit <em class="bi bi-arrow-right ml-2"></em></a>
-            <a href="../lib/logout.php" class="btn btn-primary" onclick="return confirm('Are you sure?');">Logout <em class="bi bi-x-circle-fill ml-2"></em></a>
+            <a href="../lib/logout.php" class="btn btn-danger mr-2" onclick="return confirm('Are you sure?');">Logout <em class="bi bi-x-circle-fill ml-2"></em></a>
         </div>
     </div>
 
@@ -54,16 +55,16 @@ if(login_check($dbh)) {
                             '<div class="custom-post">
                                 <div class="d-flex">
                                     <img class="post-img mr-3 w-50" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
-                                    <div class="w-50">
-                                        <p>' . $post['description'] . '</p>
+                                    <div class="w-50 custom-description">
+                                        <p >' . $post['description'] . '</p>
                                         <p>' . $post['location'] . '</p>
                                         <button type="button" name="likeButton" data-post-id="' . $post['post_id'] . '" class="custom-like btn btn-primary ml-auto mr-2"></button>
                                         <button type="button" name="commentButton" data-post-id="' . $post['post_id'] . '" class="custom-comment btn btn-primary ml-auto mr-2" onclick="addComment(' . $post['post_id'] . ')"><em class="bi bi-chat-dots-fill"></em></button>
-                                        <button type="button" name="deletePostButton" data-post-id="' . $post['post_id'] . '" class="btn btn-primary ml-auto mr-2" onclick="deletePost(' . $post['post_id'] . ')">Delete</button>';
+                                        <button type="button" name="deletePostButton" data-post-id="' . $post['post_id'] . '" class="btn btn-danger m-2" onclick="deletePost(' . $post['post_id'] . ')">Delete Post</button>';
                                         $comment_feed = $dbh->retrieveComments($post['post_id']);
                                         echo '<div class="scrollable-field mt-2 h-90">
-                                            <label for="commentArea" class="visually-hidden">Comment Area</label>
-                                            <textarea id="commentArea" class="custom-textarea mt-2 w-100" readonly>';
+                                            <label for="commentArea' . $post['post_id'] . '" class="visually-hidden">Comment Area</label>
+                                            <textarea id="commentArea' . $post['post_id'] . '" class="custom-textarea mt-2 w-100" readonly>';
                                             foreach($comment_feed as $comment) {
                                                 echo $comment['username'] . ": " . $comment['comment'] . "&#13;&#10;";
                                             }

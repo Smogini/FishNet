@@ -13,58 +13,67 @@ if (isset($_POST['action'])) {
             $search_type = $_POST['search_type'];
             $search_value = $_POST['search_value'];
 
-            if ($search_type === "Account") {
+            if ($search_type === "account") {
                 $result = $dbh->retrieveUsers($search_value);
-                if ($result) {
-                    foreach ($result as $user) {
-                        if ($user['username'] != $_SESSION['username']) {
-                            $prof_pic = $dbh->retrieveProfilePic($user['username']);
-                            echo
-                            '<form id="accountForm" method="get" action="../userProfile/userProfile.php">
-                                <div class="custom-result d-flex align-items-center mb-3">
-                                    <img id="profile_pic" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $prof_pic['image'] . '">
-                                    <div>
-                                        <h3>' . $user['username'] . '</h3>
-                                    </div>
-                                    <input type="hidden" name="user_visited" value="' . $user['username'] . '">
-                                    <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
-                                </div>
-                            </form>';
-                        }
-                    }
-                } else {
-                    echo "user_not_found";
-                }
-            } else if ($search_type === "Fish") {
+            } elseif ($search_type === "fish") {
                 $result = $dbh->retrieveFish($search_value);
-                if ($result) {
-                    foreach ($result as $post) {
-                        echo
-                        '<form id="fishForm" method="get" action="../userProfile/userProfile.php">
-                            <div class="custom-result d-flex align-items-center mb-3">
-                                <img id="profile_pic" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $post['profile_pic'] . '">
-                                <div>
-                                    <h3>' . $post['username'] . '</h3>
-                                </div>
-                                <input type="hidden" name="user_visited" value="' . $post['username'] . '">
-                                <button type="submit" class="btn btn-primary ml-auto mr-3">Visita <em class="bi bi-arrow-right ml-2"></em></button>
-                            </div>
-                            <div class="custom-result d-flex align-items-center mb-3">
-                                <img src="data:image;base64,' . $post['image'] . '" alt="Post Image" class="post-img mr-3 w-10">
-                                <div class="w-50">
-                                    <p>' . $post['description'] . '</p>
-                                    <p>' . $post['location'] . '</p>
-                                </div>
-                            </div>
-                        </form>';
-                    }
-                } else {
-                    echo "fish_not_found";
-                }
-            } else if ($search_type === "Location") {
+            } elseif ($search_type === "location") {
+                $result = $dbh->retrieveLocation($search_value);
+            } else {
+                echo "invalid_search_type";
+                break;
+            }
 
+            if ($result) {
+                foreach ($result as $item) {
+                    generateSearchResult($item, $search_type);
+                }
+            } else {
+                echo "{$search_type}_not_found";
             }
             break;
     }
+
     $dbh->closeConnection();
+}
+
+function generateSearchResult($data, $search_type) {
+    $formId = $search_type . 'Form';
+    $profilePic = isset($data['profile_pic']) ? $data['profile_pic'] : '';
+    $image = isset($data['image']) ? $data['image'] : '';
+
+    if ($search_type === "account" && $data['username'] === $_SESSION['username']) {
+        return;
+    }
+
+    if ($data['username'] === $_SESSION['username']) {
+        echo '<form id="' . $formId . '" method="get" action="../personalProfile/personalProfile.php">';            
+    } else {
+        echo '<form id="' . $formId . '" method="get" action="../userProfile/userProfile.php">';
+    }
+    echo
+        '<div class="custom-result d-flex flex-wrap align-items-center mb-2 mr-2">
+            <img id="profile_pic" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $profilePic . '">
+            <div class="flex-grow-1">
+                <h4>' . $data['username'] . '</h4>
+            </div>
+            <input type="hidden" name="user_visited" value="' . $data['username'] . '">
+            <button type="submit" class="btn btn-primary mr-2">Visita <em class="bi bi-arrow-right ml-2"></em></button>';
+
+            if ($search_type === "fish" || $search_type === "location") {
+                echo
+                '<img src="data:image;base64,' . $image . '" alt="Post Image" class="custom-post-img mr-3">';
+            }
+
+            if ($search_type === "fish" || $search_type === "location") {
+                echo
+                '<div class="custom-description">
+                    <p>' . $data['description'] . '</p>
+                    <p>' . $data['location'] .'</p>
+                </div>';
+            }
+
+    echo 
+        '</div>
+    </form>';
 }

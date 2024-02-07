@@ -53,7 +53,7 @@ if(login_check($dbh)) {
                         '<div class="custom-post">
                             <div class="d-flex">
                                 <img class="post-img mr-3 w-50" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" >
-                                <div class="w-50">
+                                <div class="w-50 custom-description">
                                     <p>' . $post['description'] . '</p>
                                     <p>' . $post['location'] . '</p>
                                     <button type="button" name="likeButton" data-post-id="' . $post['post_id'] . '" class="custom-like btn btn-primary ml-auto mr-2"></button>

@@ -36,7 +36,7 @@
             `username` VARCHAR(30) NOT NULL, 
             `time` VARCHAR(10) NOT NULL, 
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
+            FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE CASCADE
         )";
     $stmt = $dbh->prepareQuery($query);
     if (!$stmt->execute()) {
@@ -47,10 +47,10 @@
             `id` INT NOT NULL AUTO_INCREMENT,
             `username` VARCHAR(30) NOT NULL,
             `name` VARCHAR(20) NOT NULL,
-            `description` VARCHAR(100) NOT NULL,
+            `description` VARCHAR(50) NOT NULL,
             `image` LONGBLOB NOT NULL,
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON UPDATE CASCADE
+            FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE CASCADE
         );";
     $stmt = $dbh->prepareQuery($query);
     if (!$stmt->execute()) {
@@ -61,7 +61,7 @@
             `id` INT NOT NULL AUTO_INCREMENT,
             `username` VARCHAR(30) NOT NULL,
             `name` VARCHAR(20) NOT NULL,
-            `description` VARCHAR(100) NOT NULL,
+            `description` VARCHAR(50) NOT NULL,
             `image` LONGBLOB NOT NULL,
             `location` VARCHAR(40) NOT NULL,
             `fish_type` VARCHAR(40) NOT NULL,

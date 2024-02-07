@@ -52,7 +52,7 @@ if(login_check($dbh)) {
                     <?php
                         foreach ($home_feed as $post) {
                             echo
-                            '<form method="post" action="../userProfile/userProfile.php">
+                            '<form method="get" action="../userProfile/userProfile.php">
                                 <div class="custom-post">
                                     <div class="d-flex align-items-center mb-3">
                                         <img id="immagineProfilo" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $post['profile_pic'] . '">
