@@ -60,7 +60,7 @@ if(login_check($dbh)) {
                                     <button type="button" name="commentButton" data-post-id="' . $post['post_id'] . '" class="custom-comment btn btn-primary ml-auto mr-2" onclick="addComment(' . $post['post_id'] . ')"><em class="bi bi-chat-dots-fill"></em></button>';
                                     $comment_feed = $dbh->retrieveComments($post['post_id']);
                                     echo '<div class="scrollable-field mt-2 h-90">
-                                        <label for="commentArea">Comment Area</label>
+                                        <label for="commentArea" class="visually-hidden">Comment Area</label>
                                         <textarea id="commentArea" class="custom-textarea mt-2 w-100" readonly>';
                                         foreach($comment_feed as $comment) {
                                             echo $comment['username'] . ": " . $comment['comment'] . "&#13;&#10;";
