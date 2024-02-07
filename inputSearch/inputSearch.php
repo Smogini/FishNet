@@ -58,7 +58,7 @@ if(login_check($dbh)) { ?>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="account" name="searchRadio" value="Account">
-                        <label for="person">Account</label>
+                        <label for="account">Account</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="fish" name="searchRadio" value="Fish">

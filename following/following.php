@@ -67,7 +67,6 @@ if(login_check($dbh)) {
                         </div>';
                     }
                     ?>
-                </div>
             </div>
         </div>
     </div>

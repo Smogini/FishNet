@@ -20,8 +20,7 @@ if (isset($_POST['action'])) {
                         if ($user['username'] != $_SESSION['username']) {
                             $prof_pic = $dbh->retrieveProfilePic($user['username']);
                             echo
-                            '<label for="accountForm"></label>
-                            <form id="accountForm" method="get" action="../userProfile/userProfile.php">
+                            '<form id="accountForm" method="get" action="../userProfile/userProfile.php">
                                 <div class="custom-result d-flex align-items-center mb-3">
                                     <img id="profile_pic" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $prof_pic['image'] . '">
                                     <div>
@@ -41,8 +40,7 @@ if (isset($_POST['action'])) {
                 if ($result) {
                     foreach ($result as $post) {
                         echo
-                        '<label for="fishForm"></label>
-                        <form id="fishForm" method="get" action="../userProfile/userProfile.php">
+                        '<form id="fishForm" method="get" action="../userProfile/userProfile.php">
                             <div class="custom-result d-flex align-items-center mb-3">
                                 <img id="profile_pic" alt="Profilo" class="profile-img square mr-3" src="data:image;base64,' . $post['profile_pic'] . '">
                                 <div>

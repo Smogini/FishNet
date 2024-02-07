@@ -30,7 +30,7 @@ if(login_check($dbh)) {
         <div class="col-12 d-flex align-items-center">
             <?php
                 $image_info = $dbh->retrieveProfilePic($current_user);
-                echo '<img class="img-fluid" src="data:image;base64,' . $image_info['image'] . '" />';
+                echo '<img class="img-fluid" alt="Profile Pic" src="data:image;base64,' . $image_info['image'] . '" />';
             ?>
             <div>
                 <?php
@@ -66,7 +66,7 @@ if(login_check($dbh)) {
                                             foreach($comment_feed as $comment) {
                                                 echo $comment['username'] . ": " . $comment['comment'] . "&#13;&#10;";
                                             }
-                                        echo '</textarea>
+                                            echo '</textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -49,7 +49,7 @@ if(login_check($dbh)) { ?>
             <input class="m-1" type="file" name="fishImage" id="fishImage" accept="image/*" required>
 
             <label class="m-1 mt-1" for="fish_type">Fish Type:</label>
-            <input class="m-1" name="fish_type" id="fish_type" required></input>
+            <input class="m-1" name="fish_type" id="fish_type" required>
 
             <label class="m-1" for="description">Description:</label>
             <textarea class="m-1" name="description" id="description" rows="3" required></textarea>
@@ -64,8 +64,6 @@ if(login_check($dbh)) { ?>
         <button class="custom-button btn btn-primary" type="button" onclick="post()">Post</button>
         <a class="custom-button btn btn-danger ml-auto" onclick="confermaReset()">Cancel</a> 
     </div>
-</div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

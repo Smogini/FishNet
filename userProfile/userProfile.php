@@ -31,7 +31,7 @@ if(login_check($dbh)) {
         <div class="col-12 d-flex align-items-center">
             <?php
                 $image_info = $dbh->retrieveProfilePic($user_visited);
-                echo '<img class="img-fluid" src="data:image;base64,' . $image_info['image'] . '" />';
+                echo '<img class="img-fluid" alt="Profile Pic" src="data:image;base64,' . $image_info['image'] . '" >';
             ?>
             <div>
                 <?php
@@ -52,7 +52,7 @@ if(login_check($dbh)) {
                         echo 
                         '<div class="custom-post">
                             <div class="d-flex">
-                                <img class="post-img mr-3 w-50" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" />
+                                <img class="post-img mr-3 w-50" alt="' . $post['name'] . '" src="data:image;base64,'. $post['image'] .'" >
                                 <div class="w-50">
                                     <p>' . $post['description'] . '</p>
                                     <p>' . $post['location'] . '</p>
